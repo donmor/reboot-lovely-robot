@@ -1,5 +1,6 @@
 package net.msymbios.rlovelyr.item;
 
+import net.minecraft.network.chat.Component;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,7 +20,7 @@ public class LovelyRobotItemsGroup {
     @SubscribeEvent
     public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
         LOVELY_ROBOT = event.registerCreativeModeTab(new ResourceLocation(LovelyRobot.MODID, LovelyRobotID.TAB_GROUP),
-                builder -> builder.icon(() -> new ItemStack(LovelyRobotItems.BUNNY_SPAWN.get()))/*.title(Component.translatable("itemGroup.lovely_robot"))*/.build());
+                builder -> builder.icon(() -> new ItemStack(LovelyRobotItems.BUNNY_SPAWN.get())).title(Component.translatable("itemGroup.lovely_robot")).build());
     } // registerCreativeModeTab
 
 } // Class ModItemsTab
