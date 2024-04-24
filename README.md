@@ -1,8 +1,8 @@
 <p align="center">
-    <img width="861" src="https://i.imgur.com/ibMVt4s.png" alt="title">
+    <img width="461" src="https://i.imgur.com/ibMVt4s.png" alt="title">
 </p>
 
-<p align="center">Reboot of the LovelyRobot mod that adds several robot girls to Minecraft.</p>
+<p align="center">Reboot of the LovelyRobot mod that adds several robot girls to Minecraft</p>
 
 <p align="center">
     <a href="https://www.curseforge.com/minecraft/mc-mods/reboot-lovelyrobot">
@@ -17,7 +17,6 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/heria-zone/reboot-lovely-robot/discussions">Discussions</a>    ·
     <a href="https://github.com/heria-zone/reboot-lovely-robot/issues">Issues</a>    ·
     <a href="#">Wiki (Coming...)</a>
 </p>
@@ -26,8 +25,8 @@
 - Programmer: `MSymbios!`
 
 ## Credits
-- lilacx02: Original creator of the mod [LovelyRobot](https://www.curseforge.com/minecraft/mc-mods/lovelyrobot)
-- D Flog Flag & VirtualBlack8: Creators of the Minecraft Window Edition addon [LovelyRobotsPE Project](https://mcpedl.com/lovelyrobotspe-add-on/)
+- `lilacx02`: Original creator of the mod [LovelyRobot](https://www.curseforge.com/minecraft/mc-mods/lovelyrobot)
+- `D Flog Flag` & `VirtualBlack8`: Creators of the Minecraft Window Edition addon [LovelyRobotsPE Project](https://mcpedl.com/lovelyrobotspe-add-on/)
 
 ## License
 - Code: [MIT](https://www.mit.edu/~amini/LICENSE.md)
