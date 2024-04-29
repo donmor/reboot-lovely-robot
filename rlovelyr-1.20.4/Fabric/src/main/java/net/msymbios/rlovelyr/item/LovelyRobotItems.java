@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
@@ -20,13 +19,13 @@ public class LovelyRobotItems {
     // -- Variables --
     public static final Item ROBOT_CORE = register(LovelyRobotID.ROBOT_CORE, new RobotCoreItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).fireproof()));
 
-    public static final Item BUNNY_SPAWN = register(LovelyRobotID.BUNNY_SPAWN, new SpawnItem(LovelyRobotEntities.BUNNY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item BUNNY2_SPAWN = register(LovelyRobotID.BUNNY2_SPAWN, new SpawnItem(LovelyRobotEntities.BUNNY2, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item DRAGON_SPAWN = register(LovelyRobotID.DRAGON_SPAWN, new SpawnItem(LovelyRobotEntities.DRAGON, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item HONEY_SPAWN = register(LovelyRobotID.HONEY_SPAWN, new SpawnItem(LovelyRobotEntities.HONEY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item KITSUNE_SPAWN = register(LovelyRobotID.KITSUNE_SPAWN, new SpawnItem(LovelyRobotEntities.KITSUNE, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item NEKO_SPAWN = register(LovelyRobotID.NEKO_SPAWN, new SpawnItem(LovelyRobotEntities.NEKO, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
-    public static final Item VANILLA_SPAWN = register(LovelyRobotID.VANILLA_SPAWN, new SpawnItem(LovelyRobotEntities.VANILLA, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item BUNNY_SPAWN = register(LovelyRobotID.BUNNY_SPAWN, new SpawnItem(LovelyRobotEntities.BUNNY_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item BUNNY2_SPAWN = register(LovelyRobotID.BUNNY2_SPAWN, new SpawnItem(LovelyRobotEntities.BUNNY2_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item DRAGON_SPAWN = register(LovelyRobotID.DRAGON_SPAWN, new SpawnItem(LovelyRobotEntities.DRAGON_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item HONEY_SPAWN = register(LovelyRobotID.HONEY_SPAWN, new SpawnItem(LovelyRobotEntities.HONEY_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item KITSUNE_SPAWN = register(LovelyRobotID.KITSUNE_SPAWN, new SpawnItem(LovelyRobotEntities.KITSUNE_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item NEKO_SPAWN = register(LovelyRobotID.NEKO_SPAWN, new SpawnItem(LovelyRobotEntities.NEKO_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
+    public static final Item VANILLA_SPAWN = register(LovelyRobotID.VANILLA_SPAWN, new SpawnItem(LovelyRobotEntities.VANILLA_ENTITY, new FabricItemSettings().rarity(Rarity.RARE).fireproof()));
 
     // -- Methods --
 
@@ -38,7 +37,7 @@ public class LovelyRobotItems {
      * @return       the registered item
      */
     private static Item register(String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(LovelyRobot.MODID, name), item);
+        return Registry.register(Registries.ITEM, LovelyRobotID.getId(name), item);
     } // register ()
 
     /**

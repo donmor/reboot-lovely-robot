@@ -29,7 +29,6 @@ import net.minecraft.world.event.GameEvent;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.enums.EntityTexture;
 import net.msymbios.rlovelyr.entity.internal.InternalEntity;
-import net.msymbios.rlovelyr.util.Utility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -145,14 +144,24 @@ public class SpawnItem extends SpawnEggItem {
 
     // -- Custom Methods --
 
+    /**
+     * Initializes the internal entity based on the data stored in the NBT compound.
+     *
+     * @param dataNBT The NBT compound containing the entity data
+     * @param entity The internal entity to initialize
+     * */
     private void initialize (NbtCompound dataNBT, InternalEntity entity) {
+        // Set custom name if it is not empty
         if(!dataNBT.getString(LovelyRobotID.STAT_CUSTOM_NAME).isEmpty()) entity.setCustomName(Text.literal(dataNBT.getString(LovelyRobotID.STAT_CUSTOM_NAME)));
+        // Set texture if it is not the default random texture
         if(dataNBT.getInt(LovelyRobotID.STAT_COLOR) != EntityTexture.RANDOM.getId()) entity.setTexture(dataNBT.getInt(LovelyRobotID.STAT_COLOR));
 
+        // Set max level, current level, and experience if they are greater than 0
         if(dataNBT.getInt(LovelyRobotID.STAT_MAX_LEVEL) > 0) entity.setMaxLevel(dataNBT.getInt(LovelyRobotID.STAT_MAX_LEVEL));
         if(dataNBT.getInt(LovelyRobotID.STAT_LEVEL) > 0) entity.setCurrentLevel(dataNBT.getInt(LovelyRobotID.STAT_LEVEL));
         if(dataNBT.getInt(LovelyRobotID.STAT_EXP) > 0) entity.setExp(dataNBT.getInt(LovelyRobotID.STAT_EXP));
 
+        // Set various protection levels if they are greater than 0
         if(dataNBT.getInt(LovelyRobotID.STAT_FIRE_PROTECTION) > 0) entity.setFireProtection(dataNBT.getInt(LovelyRobotID.STAT_FIRE_PROTECTION));
         if(dataNBT.getInt(LovelyRobotID.STAT_FALL_PROTECTION) > 0) entity.setFallProtection(dataNBT.getInt(LovelyRobotID.STAT_FALL_PROTECTION));
         if(dataNBT.getInt(LovelyRobotID.STAT_BLAST_PROTECTION) > 0) entity.setBlastProtection(dataNBT.getInt(LovelyRobotID.STAT_BLAST_PROTECTION));

@@ -1,140 +1,240 @@
 package net.msymbios.rlovelyr.entity.internal;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
-import java.util.Objects;
-
 public class InternalLogic {
 
-    // -- Properties --
-    public static int getHpValue(InternalEntity entity, int value) {
-        return (value + entity.getCurrentLevel() * value / 50);
-    } // getHpValue ()
+    // -- Methods --
 
-    public static int getAttackValue(InternalEntity entity, int value) {
-        return (value + entity.getCurrentLevel() * value / 50);
-    } // getAttackValue ()
+    // GETTERS
 
-    public static int getDefenseValue(InternalEntity entity, int value) {
-        return (value + entity.getCurrentLevel() * value / 50);
-    } // getDefenseValue ()
+    /**
+     * Calculate the HP based on the level and value.
+     *
+     * @param level The level of the character
+     * @param value The base HP value
+     * @return the calculated HP
+     */
+    public static int calculateHp(int level, int value) { return (value + level * value / 50); } // calculateHp ()
 
-    public static double getArmorValue (InternalEntity entity) {
-        int armor = entity.getDefense();
+    /**
+     * Calculates the attack value based on the level and base value.
+     *
+     * @param level The level of the entity
+     * @param value The base attack value
+     * @return the calculated attack value
+     */
+    public static int calculateAttack(int level, int value) { return (value + level * value / 50); } // calculateAttack ()
+
+    /**
+     * Calculates the defense value based on the level and base value.
+     *
+     * @param level The level of the character.
+     * @param value The base defense value.
+     * @return The calculated defense value.
+     */
+    public static int calculateDefense(int level, int value) { return (value + level * value / 50); } // calculateDefense ()
+
+    /**
+     * Calculates the armor based on the defense value.
+     *
+     * @param defense The defense value to calculate armor from.
+     * @return The calculated armor value.
+     */
+    public static double calculateArmor(int defense) {
+        int armor = defense;
         if (armor > 30) armor = 30;
         return armor;
-    } // getArmorValue ()
+    } // calculateArmor ()
 
-    public static double getArmorToughnessValue (InternalEntity entity) {
-        double armor = entity.getArmorLevel();
+    /**
+     * Calculates the armor toughness based on the armor level.
+     *
+     * @param armorLevel the level of armor
+     * @return the calculated armor toughness
+     */
+    public static double calculateArmorToughness(double armorLevel) {
         double armor_tou = 0;
-        if (armor > 30) armor_tou = armor - 30;
+
+        // Calculate armor toughness if armor level is greater than 30
+        if (armorLevel > 30) armor_tou = armorLevel - 30;
         return armor_tou;
-    } // getArmorToughnessValue ()
+    } // calculateArmorToughness ()
 
-    public static int getLootingLevel(InternalEntity entity) {
-        int level = 0;
+    /**
+     * Calculates the looting enchantment level based on the provided level.
+     *
+     * @param level the level to calculate the enchantment for
+     * @return the calculated enchantment level
+     */
+    public static int calculateLooting(int level) {
+        int enchantmentLevel = 0;
+        // Check if looting enchantment is enabled
         if (InternalMetric.LOOT_ENCHANTMENT) {
-            level = entity.getCurrentLevel() / InternalMetric.LOOT_ENCHANTMENT_LEVEL;
-            if (level > InternalMetric.MAX_LOOT_ENCHANTMENT) {
-                level = InternalMetric.MAX_LOOT_ENCHANTMENT;
+            enchantmentLevel = level / InternalMetric.LOOT_ENCHANTMENT_LEVEL;
+            // Ensure enchantment level does not exceed the maximum allowed
+            if (enchantmentLevel > InternalMetric.MAX_LOOT_ENCHANTMENT) {
+                enchantmentLevel = InternalMetric.MAX_LOOT_ENCHANTMENT;
             }
         }
-        return level;
-    } // getLootingLevel ()
+        return enchantmentLevel;
+    } // calculateLooting ()
 
-    // -- Methods --
-    public static void handleSetLevel(InternalEntity entity) {
-        EntityAttributeInstance maxHealthAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
-        assert maxHealthAttribute != null;
-        maxHealthAttribute.setBaseValue(entity.getHp());
+    /**
+     * Calculates the experience needed for the next level based on the current level.
+     *
+     * @param level the current level of the entity
+     * @return the experience needed for the next level
+     */
+    public static int calculateNextExp(int level) {
+        // Calculate the experience needed for the next level
+        return InternalMetric.EXPERIENCE_BASE + level * InternalMetric.EXPERIENCE_MULTIPLIER;
+    } // calculateNextExp ()
 
-        EntityAttributeInstance damageAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-        assert damageAttribute != null;
-        damageAttribute.setBaseValue(entity.getAttack());
+    // LOGIC
 
-        EntityAttributeInstance armorAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-        assert armorAttribute != null;
-        armorAttribute.setBaseValue(entity.getArmorLevel());
+    /**
+     * Updates the attributes of a LivingEntity based on the provided parameters.
+     *
+     * @param entity The LivingEntity whose attributes will be updated.
+     * @param hp The new health points value.
+     * @param attack The new attack value.
+     * @param armorLevel The new armor level value.
+     * @param armorToughness The new armor toughness value.
+     */
+    public static void handleLevel(LivingEntity entity, int hp, int attack, double armorLevel, double armorToughness) {
+        // Update the maximum health attribute
+        updateEntityAttribute(entity, EntityAttributes.GENERIC_MAX_HEALTH, hp);
+        // Update the attack damage attribute
+        updateEntityAttribute(entity, EntityAttributes.GENERIC_ATTACK_DAMAGE, attack);
+        // Update the armor attribute
+        updateEntityAttribute(entity, EntityAttributes.GENERIC_ARMOR, armorLevel);
+        // Update the armor toughness attribute
+        updateEntityAttribute(entity, EntityAttributes.GENERIC_ARMOR_TOUGHNESS, armorToughness);
+    } // handleLevel ()
 
-        EntityAttributeInstance armorToughnessAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-        assert armorToughnessAttribute != null;
-        armorToughnessAttribute.setBaseValue(entity.getArmorToughnessLevel());
-    } // handleSetLevel ()
+    /**
+     * Checks if the given level is less than the maximum level.
+     *
+     * @param level the current level
+     * @param maxLevel the maximum level allowed
+     * @return true if the level is less than the maximum level, false otherwise
+     */
+    public static boolean handleLevelUp(int level, int maxLevel) {
+        return level < maxLevel;
+    } // handleLevelUp ()
 
-    public static boolean canLevelUp(InternalEntity entity) {
-        return entity.getCurrentLevel() < entity.getMaxLevel();
-    } // canLevelUp ()
+    /**
+     * Checks if the protection level for fire needs to be upgraded based on the provided protection level.
+     *
+     * @param protectionLevel The current protection level for fire.
+     * @return true if the protection level needs to be upgraded, false otherwise.
+     */
+    public static boolean handleFireProtectionLevelUp(int protectionLevel) {
+        return protectionLevel < InternalMetric.PROTECTION_LIMIT_FIRE;
+    } // handleFireProtectionLevelUp ()
 
-    public static boolean canLevelUpFireProtection(InternalEntity entity) {
-        return entity.getFireProtection() < InternalMetric.PROTECTION_LIMIT_FIRE;
-    } // canLevelUpFireProtection ()
+    /**
+     * Checks if the protection level for fall needs to be upgraded based on the provided protection level.
+     *
+     * @param protectionLevel The current protection level for fall.
+     * @return true if the protection level needs to be upgraded, false otherwise.
+     */
+    public static boolean handleFallProtectionLevelUp(int protectionLevel) {
+        return protectionLevel < InternalMetric.PROTECTION_LIMIT_FALL;
+    } // handleFallProtectionLevelUp ()
 
-    public static boolean canLevelUpFallProtection(InternalEntity entity) {
-        return entity.getFallProtection() < InternalMetric.PROTECTION_LIMIT_FALL;
-    } // canLevelUpFallProtection ()
+    /**
+     * Checks if the protection level for blast needs to be upgraded based on the provided protection level.
+     *
+     * @param protectionLevel The current protection level for blast.
+     * @return true if the protection level needs to be upgraded, false otherwise.
+     */
+    public static boolean handleBlastProtectionLevelUp(int protectionLevel) {
+        return protectionLevel < InternalMetric.PROTECTION_LIMIT_BLAST;
+    } // handleBlastProtectionLevelUp ()
 
-    public static boolean canLevelUpBlastProtection(InternalEntity entity) {
-        return entity.getBlastProtection() < InternalMetric.PROTECTION_LIMIT_BLAST;
-    } // canLevelUpBlastProtection ()
-
-    public static boolean canLevelUpProjectileProtection(InternalEntity entity) {
-        return entity.getProjectileProtection() < InternalMetric.PROTECTION_LIMIT_PROJECTILE;
-    } // canLevelUpProjectileProtection ()
-
-    public static int getNextExp(InternalEntity entity) {
-        return InternalMetric.EXPERIENCE_BASE + entity.getCurrentLevel() * InternalMetric.EXPERIENCE_MULTIPLIER;
-    } // getNextExp ()
-
-    public static void addExp (InternalEntity entity, int value) {
-        int addExp = value;
-        int exp = entity.getExp();
-        String customName = "";
-        try {customName = entity.getCustomName().getString();}
-        catch (Exception ignored) {}
-
-        // if they have a name they earn more exp
-        if(!customName.isEmpty()) addExp = addExp * 3 / 2;
-        exp += addExp;
-
-        var oldLevel = entity.getCurrentLevel();
-        while (exp >= getNextExp(entity)) {
-            exp -= getNextExp(entity);
-            entity.setCurrentLevel(entity.getCurrentLevel() + 1);
-            InternalParticle.LevelUp(entity);
-            entity.getWorld().sendEntityStatus(entity, (byte) 6);
-        }
-
-        entity.setExp(exp);
-        if(oldLevel != entity.getCurrentLevel()) {
-            if(!entity.getWorld().isClient) {
-                try {
-                    final LivingEntity owner = entity.getOwner();
-                    if (owner == null) return;
-                    entity.displayGeneralMessage(entity.getNotification(), true);
-                } catch (Exception ignored) {}
-            }
-        }
-    } // addExp ()
+    /**
+     * Check if the provided protection level is below the projectile protection limit.
+     *
+     * @param protectionLevel The protection level to be checked
+     * @return true if the protection level is below the projectile protection limit, false otherwise
+     */
+    public static boolean handleProjectileProtectionLevelUp(int protectionLevel) {
+        return protectionLevel < InternalMetric.PROTECTION_LIMIT_PROJECTILE;
+    } // handleProjectileProtectionLevelUp ()
 
     // UTILITY
-    public static void commandDebug(InternalEntity entity, String message, boolean overlay) {
-        if(entity.getOwner() != null) {
-            PlayerEntity player = (PlayerEntity)entity.getOwner();
-            player.sendMessage(Text.literal(message), overlay);
-        }
-    } // commandDebug ()
 
-    public static void commandDebug(InternalEntity entity, MutableText message, boolean overlay) {
+    /**
+     * Updates the specified entity's attribute with the given value.
+     *
+     * @param entity The living entity whose attribute needs to be updated.
+     * @param attribute The entity attribute to update.
+     * @param value The new value for the attribute.
+     */
+    private static void updateEntityAttribute(LivingEntity entity, EntityAttribute attribute, int value) {
+        // Get the entity's attribute instance for the specified attribute
+        EntityAttributeInstance defaultAttributeValue = entity.getAttributeInstance(attribute);
+
+        // Ensure the attribute instance is not null
+        assert defaultAttributeValue != null;
+
+        // Set the base value of the attribute to the provided value
+        defaultAttributeValue.setBaseValue(value);
+    } // updateEntityAttribute ()
+
+    /**
+     * Updates the specified entity's attribute with the given double value.
+     *
+     * @param entity The living entity whose attribute needs to be updated.
+     * @param attribute The entity attribute to update.
+     * @param value The new double value for the attribute.
+     */
+    private static void updateEntityAttribute(LivingEntity entity, EntityAttribute attribute, double value) {
+        // Get the entity's attribute instance for the specified attribute
+        EntityAttributeInstance defaultAttributeValue = entity.getAttributeInstance(attribute);
+
+        // Ensure the attribute instance is not null
+        assert defaultAttributeValue != null;
+
+        // Set the base value of the attribute to the provided double value
+        defaultAttributeValue.setBaseValue(value);
+    } // updateEntityAttribute ()
+
+    // DISPLAY
+
+    /**
+     * Displays the given message to the owner of the entity, if the owner exists.
+     *
+     * @param entity The entity to display the message owner.
+     * @param message The message to display.
+     * @param overlay Indicates whether the message should be displayed as an overlay.
+     */
+    public static void displayInfo(TameableEntity entity, MutableText message, boolean overlay) {
+        // Check if the entity has an owner
         if(entity.getOwner() != null) {
+            // Get the owner as a PlayerEntity
             PlayerEntity player = (PlayerEntity)entity.getOwner();
+            // Send the message to the player
             player.sendMessage(message, overlay);
         }
-    } // commandDebug ()
+    } // displayInfo ()
+
+    /**
+     * Displays the given message to the owner of the entity, if the owner exists.
+     *
+     * @param entity The entity to display the message owner.
+     * @param message The message to display.
+     * @param overlay Indicates whether the message should be displayed as an overlay.
+     */
+    public static void displayInfo(TameableEntity entity, String message, boolean overlay) { displayInfo(entity, Text.literal(message), overlay); } // displayInfo ()
 
 } // Class InternalLogic

@@ -1,6 +1,12 @@
 package net.msymbios.rlovelyr.config;
 
+import net.minecraft.util.Identifier;
+import net.msymbios.rlovelyr.LovelyRobot;
+
 public class LovelyRobotID {
+
+    // -- Items Group --
+    public static final String DEFAULT_GROUP = "lovely_robot";
 
     // -- Items --
 
@@ -78,16 +84,41 @@ public class LovelyRobotID {
     public static final String TEX_RANDOM = "random";
 
     // -- Translations --
+    public static final String TRANS_ITEM_GROUP = "itemGroup.lovely_robot";
+
+    public static final String TRANS_MSG_HEAL = "msg.rlovelyr.heal";
+    public static final String TRANS_MSG_WARY = "msg.rlovelyr.wary";
+    public static final String TRANS_MSG_LEVEL_UP = "msg.rlovelyr.level_up";
+    public static final String TRANS_MSG_HEALTH = "msg.rlovelyr.health";
+    public static final String TRANS_MSG_ATTACK = "msg.rlovelyr.attack";
+    public static final String TRANS_MSG_EXPERIENCE = "msg.rlovelyr.experience";
+    public static final String TRANS_MSG_ENCHANTMENT = "msg.rlovelyr.enchantment";
+    public static final String TRANS_MSG_BAR = "msg.rlovelyr.bar";
+    public static final String TRANS_MSG_LOOTING = "msg.rlovelyr.looting";
+    public static final String TRANS_MSG_STATE = "msg.rlovelyr.state";
+    public static final String TRANS_MSG_DEFENCE = "msg.rlovelyr.defence";
+    public static final String TRANS_MSG_FOLLOW = "msg.rlovelyr.follow";
+    public static final String TRANS_MSG_STANDBY = "msg.rlovelyr.standby";
+    public static final String TRANS_MSG_BASE_DEFENCE = "msg.rlovelyr.base_defence";
+    public static final String TRANS_MSG_OWNER = "msg.rlovelyr.owner";
+
+    public static final String TRANS_MSG_NOTIFICATION = "msg.rlovelyr.notification";
+    public static final String TRANS_MSG_AUTO_ATTACK = "msg.rlovelyr.auto_attack";
+
+    public static final String TRANS_MSG_OFF = "msg.rlovelyr.off";
+    public static final String TRANS_MSG_ON = "msg.rlovelyr.on";
+
     public static final String TRANS_MSG_CUSTOM_NAME = "msg.item.name";
     public static final String TRANS_MSG_COLOR = "msg.item.color";
     public static final String TRANS_MSG_TYPE = "msg.item.type";
     public static final String TRANS_MSG_MAX_LEVEL = "msg.item.max_level";
     public static final String TRANS_MSG_LEVEL = "msg.item.level";
     public static final String TRANS_MSG_EXP = "msg.item.exp";
-    public static final String TRANS_MSG_FIRE_PROTECTION = "msg.item.fire_protection";
-    public static final String TRANS_MSG_FALL_PROTECTION = "msg.item.fall_protection";
-    public static final String TRANS_MSG_BLAST_PROTECTION = "msg.item.blast_protection";
-    public static final String TRANS_MSG_PROJECTILE_PROTECTION = "msg.item.projectile_protection";
+
+    public static final String TRANS_MSG_FIRE_PROTECTION = "msg.rlovelyr.fire_protection";
+    public static final String TRANS_MSG_FALL_PROTECTION = "msg.rlovelyr.fall_protection";
+    public static final String TRANS_MSG_BLAST_PROTECTION = "msg.rlovelyr.blast_protection";
+    public static final String TRANS_MSG_PROJECTILE_PROTECTION = "msg.rlovelyr.projectile_protection";
 
     public static final String TRANS_MSG_BUNNY = "entity.rlovelyr.bunny";
     public static final String TRANS_MSG_BUNNY2 = "entity.rlovelyr.bunny2";
@@ -96,10 +127,6 @@ public class LovelyRobotID {
     public static final String TRANS_MSG_KITSUNE = "entity.rlovelyr.kitsune";
     public static final String TRANS_MSG_NEKO = "entity.rlovelyr.neko";
     public static final String TRANS_MSG_VANILLA = "entity.rlovelyr.vanilla";
-
-    public static final String TRANS_MSG_FOLLOW = "msg.rlovelyr.follow";
-    public static final String TRANS_MSG_DEFENCE = "msg.rlovelyr.base_defence";
-    public static final String TRANS_MSG_STANDBY = "msg.rlovelyr.standby";
 
     public static final String TRANS_MSG_RANDOM = "msg.item.random";
     public static final String TRANS_MSG_WHITE = "msg.item.white";
@@ -118,5 +145,17 @@ public class LovelyRobotID {
     public static final String TRANS_MSG_GREEN  = "msg.item.green";
     public static final String TRANS_MSG_RED = "msg.item.red";
     public static final String TRANS_MSG_BLACK = "msg.item.black";
+
+    // -- Methods --
+
+    public static Identifier getId(final String path) {
+        return new Identifier(LovelyRobot.MODID, path);
+    } // getId ()
+
+    public static Identifier getId(final String namespace, final String path) {
+        if (namespace == null || namespace.isEmpty())
+            return getId(path);
+        return new Identifier(namespace, path);
+    } // getId ()
 
 } // Class LovelyRobotID

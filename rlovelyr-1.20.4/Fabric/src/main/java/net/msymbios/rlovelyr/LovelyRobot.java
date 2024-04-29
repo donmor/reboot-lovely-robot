@@ -18,6 +18,10 @@ public class LovelyRobot implements ModInitializer {
 	public static final String MODID = "rlovelyr";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
+	/**
+	 * This method is called when the mod is being initialized.
+	 * It initializes GeckoLib, registers config, items, events, and entities for LovelyRobot.
+	 */
 	@Override
 	public void onInitialize() {
 		GeckoLib.initialize();

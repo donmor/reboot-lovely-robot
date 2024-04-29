@@ -9,8 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.client.renderer.*;
 import net.msymbios.rlovelyr.entity.custom.*;
@@ -19,38 +17,59 @@ import net.msymbios.rlovelyr.entity.internal.InternalMetric;
 public class LovelyRobotEntities {
 
     // -- Variables --
-    public static final EntityType<BunnyEntity> BUNNY = register(LovelyRobotID.BUNNY, BunnyEntity::new);
-    public static final EntityType<Bunny2Entity> BUNNY2 = register(LovelyRobotID.BUNNY2, Bunny2Entity::new);
-    public static final EntityType<DragonEntity> DRAGON = register(LovelyRobotID.DRAGON, DragonEntity::new);
-    public static final EntityType<HoneyEntity> HONEY = register(LovelyRobotID.HONEY, HoneyEntity::new);
-    public static final EntityType<KitsuneEntity> KITSUNE = register(LovelyRobotID.KITSUNE, KitsuneEntity::new);
-    public static final EntityType<NekoEntity> NEKO = register(LovelyRobotID.NEKO, NekoEntity::new);
-    public static final EntityType<VanillaEntity> VANILLA = register(LovelyRobotID.VANILLA, VanillaEntity::new);
+    public static final EntityType<BunnyEntity> BUNNY_ENTITY = register(LovelyRobotID.BUNNY, BunnyEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<Bunny2Entity> BUNNY2_ENTITY = register(LovelyRobotID.BUNNY2, Bunny2Entity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<DragonEntity> DRAGON_ENTITY = register(LovelyRobotID.DRAGON, DragonEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<HoneyEntity> HONEY_ENTITY = register(LovelyRobotID.HONEY, HoneyEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<KitsuneEntity> KITSUNE_ENTITY = register(LovelyRobotID.KITSUNE, KitsuneEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<NekoEntity> NEKO_ENTITY = register(LovelyRobotID.NEKO, NekoEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
+    public static final EntityType<VanillaEntity> VANILLA_ENTITY = register(LovelyRobotID.VANILLA, VanillaEntity::new, SpawnGroup.CREATURE, InternalMetric.WIDTH, InternalMetric.HEIGHT);
 
     // -- Methods --
-    private static <T extends Entity> EntityType<T> register (String name, EntityType.EntityFactory<T> factory) {
-        return Registry.register(Registries.ENTITY_TYPE, new Identifier(LovelyRobot.MODID, name),
-                FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, factory).dimensions(EntityDimensions.fixed(InternalMetric.WIDTH, InternalMetric.HEIGHT)).build());
+
+    /**
+     * Registers a custom entity type with the specified name, factory, spawn group, width, and height.
+     *
+     * @param <T> The type of entity
+     * @param name The name of the entity type
+     * @param factory The factory to create instances of the entity type
+     * @param spawnGroup The spawn group of the entity
+     * @param width The width of the entity
+     * @param height The height of the entity
+     * @return The registered entity type
+     * */
+    private static <T extends Entity> EntityType<T> register (String name, EntityType.EntityFactory<T> factory, SpawnGroup spawnGroup, float width, float height) {
+        // Register the entity type with the provided name, factory, spawn group, width, and height
+        return Registry.register(Registries.ENTITY_TYPE, LovelyRobotID.getId(name),
+                FabricEntityTypeBuilder.create(spawnGroup, factory).dimensions(EntityDimensions.fixed(width, height)).build());
     } // register ()
 
+    /**
+     * Registers default attributes for various entities.
+     * */
     public static void registerAttribute(){
-        FabricDefaultAttributeRegistry.register(BUNNY, BunnyEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(BUNNY2, Bunny2Entity.setAttributes());
-        FabricDefaultAttributeRegistry.register(DRAGON, DragonEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(HONEY, HoneyEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(KITSUNE, KitsuneEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(NEKO, NekoEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(VANILLA, VanillaEntity.setAttributes());
+        // Register default attributes for different entities
+        FabricDefaultAttributeRegistry.register(BUNNY_ENTITY, BunnyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(BUNNY2_ENTITY, Bunny2Entity.setAttributes());
+        FabricDefaultAttributeRegistry.register(DRAGON_ENTITY, DragonEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(HONEY_ENTITY, HoneyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(KITSUNE_ENTITY, KitsuneEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(NEKO_ENTITY, NekoEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(VANILLA_ENTITY, VanillaEntity.setAttributes());
     } // registerAttribute ()
 
+    /**
+     * Registers entity renderers for various entities.
+     * */
     public static void registerRender(){
-        EntityRendererRegistry.register(BUNNY, BunnyRenderer::new);
-        EntityRendererRegistry.register(BUNNY2, Bunny2Renderer::new);
-        EntityRendererRegistry.register(DRAGON, DragonRenderer::new);
-        EntityRendererRegistry.register(HONEY, HoneyRenderer::new);
-        EntityRendererRegistry.register(KITSUNE, KitsuneRenderer::new);
-        EntityRendererRegistry.register(NEKO, NekoRenderer::new);
-        EntityRendererRegistry.register(VANILLA, VanillaRenderer::new);
+        // Register entity renderers for different entities
+        EntityRendererRegistry.register(BUNNY_ENTITY, BunnyRenderer::new);
+        EntityRendererRegistry.register(BUNNY2_ENTITY, Bunny2Renderer::new);
+        EntityRendererRegistry.register(DRAGON_ENTITY, DragonRenderer::new);
+        EntityRendererRegistry.register(HONEY_ENTITY, HoneyRenderer::new);
+        EntityRendererRegistry.register(KITSUNE_ENTITY, KitsuneRenderer::new);
+        EntityRendererRegistry.register(NEKO_ENTITY, NekoRenderer::new);
+        EntityRendererRegistry.register(VANILLA_ENTITY, VanillaRenderer::new);
     } // registerRender ()
 
 } // Class LovelyRobotEntities

@@ -12,6 +12,7 @@ import net.minecraft.world.EntityView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.msymbios.rlovelyr.entity.animation.AnimationManager;
 import net.msymbios.rlovelyr.entity.enums.*;
 import net.msymbios.rlovelyr.entity.goal.AiAutoAttackGoal;
 import net.msymbios.rlovelyr.entity.goal.AiBaseDefenseGoal;
@@ -24,6 +25,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 public class VanillaEntity extends InternalEntity implements GeoEntity {
 
@@ -50,14 +52,17 @@ public class VanillaEntity extends InternalEntity implements GeoEntity {
     // -- Inherited Methods --
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegister) {
+        //AnimationManager manager = AnimationManager.getInstance();
+        //controllerRegister.add(new AnimationController<>(this, "main", 2, manager::predicateMain));
+
         controllerRegister.add(InternalAnimation.locomotionAnimation(this));
         controllerRegister.add(InternalAnimation.attackAnimation(this));
     } // registerControllers ()
 
     @Override
-    public AnimatableInstanceCache  getAnimatableInstanceCache() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    } // getFactory ()
+    } // getAnimatableInstanceCache ()
 
     // -- Built-In Methods --
     @Nullable

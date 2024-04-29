@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.util.Identifier;
-import net.msymbios.rlovelyr.LovelyRobot;
+import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.enums.*;
 
 import java.util.ArrayList;
@@ -66,38 +66,38 @@ public class InternalMetric {
 
     public static HashMap<EntityVariant, HashMap<EntityModel, Identifier>> ENTITY_MODEL = new HashMap<>(){{
         put(EntityVariant.Bunny, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/bunny.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/bunny.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/bunny.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/bunny.attack.geo.json"));
         }});
 
         put(EntityVariant.Bunny2, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/bunny2.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/bunny2.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/bunny2.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/bunny2.attack.geo.json"));
         }});
 
         put(EntityVariant.Dragon, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/dragon.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/dragon.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/dragon.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/dragon.attack.geo.json"));
         }});
 
         put(EntityVariant.Honey, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/honey.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/honey.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/honey.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/honey.attack.geo.json"));
         }});
 
         put(EntityVariant.Kitsune, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/kitsune.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/kitsune.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/kitsune.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/kitsune.attack.geo.json"));
         }});
 
         put(EntityVariant.Neko, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/neko.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/neko.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/neko.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/neko.attack.geo.json"));
         }});
 
         put(EntityVariant.Vanilla, new HashMap<>() {{
-            put(EntityModel.Default,    new Identifier(LovelyRobot.MODID, "geo/vanilla.geo.json"));
-            put(EntityModel.Armed,      new Identifier(LovelyRobot.MODID, "geo/vanilla.attack.geo.json"));
+            put(EntityModel.Default,    LovelyRobotID.getId("geo/vanilla.geo.json"));
+            put(EntityModel.Armed,      LovelyRobotID.getId("geo/vanilla.attack.geo.json"));
         }});
     }};
 
@@ -130,7 +130,7 @@ public class InternalMetric {
     }};
 
     public static HashMap<EntityAnimator, Identifier> ANIMATOR = new HashMap<>() {{
-        put(EntityAnimator.Default,    new Identifier(LovelyRobot.MODID, "animations/default.animation.json"));
+        put(EntityAnimator.Default,    LovelyRobotID.getId("animations/default.animation.json"));
     }};
 
     public static HashMap<EntityVariant, HashMap<EntityTexture, Identifier>> TEXTURE = new HashMap<>(){{
@@ -216,22 +216,22 @@ public class InternalMetric {
     private static HashMap<EntityTexture, Identifier> setTexture(EntityVariant variant){
         String path = variant.getName() + "/" + variant.getName();
         return new HashMap<>() {{
-            put(EntityTexture.WHITE,         new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_00.png")); // White
-            put(EntityTexture.ORANGE,        new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_01.png")); // Orange
-            put(EntityTexture.MAGENTA,       new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_02.png")); // Magenta
-            put(EntityTexture.LIGHT_BLUE,    new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_03.png")); // Light Blue
-            put(EntityTexture.YELLOW,        new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_04.png")); // Yellow
-            put(EntityTexture.LIME,          new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_05.png")); // Lime
-            put(EntityTexture.PINK,          new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_06.png")); // Pink
-            put(EntityTexture.GRAY,          new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_07.png")); // Gray
-            put(EntityTexture.LIGHT_GRAY,    new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_08.png")); // Light Gray
-            put(EntityTexture.CYAN,          new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_09.png")); // Cyan
-            put(EntityTexture.PURPLE,        new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_10.png")); // Purple
-            put(EntityTexture.BLUE,          new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_11.png")); // Blue
-            put(EntityTexture.BROWN,         new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_12.png")); // Brown
-            put(EntityTexture.GREEN,         new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_13.png")); // Green
-            put(EntityTexture.RED,           new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_14.png")); // Red
-            put(EntityTexture.BLACK,         new Identifier(LovelyRobot.MODID, "textures/entity/" + path + "_15.png")); // Black
+            put(EntityTexture.WHITE,         LovelyRobotID.getId("textures/entity/" + path + "_00.png")); // White
+            put(EntityTexture.ORANGE,        LovelyRobotID.getId("textures/entity/" + path + "_01.png")); // Orange
+            put(EntityTexture.MAGENTA,       LovelyRobotID.getId("textures/entity/" + path + "_02.png")); // Magenta
+            put(EntityTexture.LIGHT_BLUE,    LovelyRobotID.getId("textures/entity/" + path + "_03.png")); // Light Blue
+            put(EntityTexture.YELLOW,        LovelyRobotID.getId("textures/entity/" + path + "_04.png")); // Yellow
+            put(EntityTexture.LIME,          LovelyRobotID.getId("textures/entity/" + path + "_05.png")); // Lime
+            put(EntityTexture.PINK,          LovelyRobotID.getId("textures/entity/" + path + "_06.png")); // Pink
+            put(EntityTexture.GRAY,          LovelyRobotID.getId("textures/entity/" + path + "_07.png")); // Gray
+            put(EntityTexture.LIGHT_GRAY,    LovelyRobotID.getId("textures/entity/" + path + "_08.png")); // Light Gray
+            put(EntityTexture.CYAN,          LovelyRobotID.getId("textures/entity/" + path + "_09.png")); // Cyan
+            put(EntityTexture.PURPLE,        LovelyRobotID.getId("textures/entity/" + path + "_10.png")); // Purple
+            put(EntityTexture.BLUE,          LovelyRobotID.getId("textures/entity/" + path + "_11.png")); // Blue
+            put(EntityTexture.BROWN,         LovelyRobotID.getId("textures/entity/" + path + "_12.png")); // Brown
+            put(EntityTexture.GREEN,         LovelyRobotID.getId("textures/entity/" + path + "_13.png")); // Green
+            put(EntityTexture.RED,           LovelyRobotID.getId("textures/entity/" + path + "_14.png")); // Red
+            put(EntityTexture.BLACK,         LovelyRobotID.getId("textures/entity/" + path + "_15.png")); // Black
         }};
     } // setTexture ()
 
