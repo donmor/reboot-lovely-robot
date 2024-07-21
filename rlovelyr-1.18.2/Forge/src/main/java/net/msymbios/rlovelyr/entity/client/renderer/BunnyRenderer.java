@@ -3,25 +3,25 @@ package net.msymbios.rlovelyr.entity.client.renderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
-import net.msymbios.rlovelyr.entity.client.layer.VanillaLayer;
-import net.msymbios.rlovelyr.entity.client.model.VanillaModel;
-import net.msymbios.rlovelyr.entity.custom.VanillaEntity;
+import net.msymbios.rlovelyr.entity.client.layer.BunnyLayer;
+import net.msymbios.rlovelyr.entity.client.model.BunnyModel;
+import net.msymbios.rlovelyr.entity.custom.BunnyEntity;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class VanillaRenderer extends GeoEntityRenderer<VanillaEntity> {
+public class BunnyRenderer extends GeoEntityRenderer<BunnyEntity> {
 
     // -- Constructor --
-    public VanillaRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new VanillaModel());
+    public BunnyRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new BunnyModel());
         this.shadowRadius = LovelyRobotConfig.CLIENT.shadowRadius.get().floatValue();
-        addLayer(new VanillaLayer(this));
+        addLayer(new BunnyLayer(this));
     } // Constructor Bunny2Renderer ()
 
     // -- Methods --
     @Override
-    public @NotNull ResourceLocation getTextureLocation(VanillaEntity instance) {
+    public @NotNull ResourceLocation getTextureLocation(BunnyEntity instance) {
         return instance.getTexture();
     } // getTextureLocation ()
 
-} // Class VanillaRenderer
+} // Class BunnyRenderer

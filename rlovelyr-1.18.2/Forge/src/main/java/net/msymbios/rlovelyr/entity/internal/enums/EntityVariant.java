@@ -8,13 +8,13 @@ import java.util.Comparator;
 public enum EntityVariant {
 
     // -- Enum --
-    Bunny(0, LovelyRobotID.BUNNY),
-    Bunny2(1, LovelyRobotID.BUNNY2),
-    Dragon(2, LovelyRobotID.DRAGON),
-    Honey(3, LovelyRobotID.HONEY),
-    Kitsune(4, LovelyRobotID.KITSUNE),
-    Neko(5, LovelyRobotID.NEKO),
-    Vanilla(6, LovelyRobotID.VANILLA);
+    Bunny(0, LovelyRobotID.VARIANT_BUNNY),
+    Bunny2(1, LovelyRobotID.VARIANT_BUNNY2),
+    Dragon(2, LovelyRobotID.VARIANT_DRAGON),
+    Honey(3, LovelyRobotID.VARIANT_HONEY),
+    Kitsune(4, LovelyRobotID.VARIANT_KITSUNE),
+    Neko(5, LovelyRobotID.VARIANT_NEKO),
+    Vanilla(6, LovelyRobotID.VARIANT_VANILLA);
 
     // -- Variables --
     private static final EntityVariant[] CODEC = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityVariant::getId)).toArray(EntityVariant[]::new);

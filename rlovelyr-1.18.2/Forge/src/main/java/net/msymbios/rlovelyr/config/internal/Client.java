@@ -13,7 +13,7 @@ public class Client {
     // -- Variables --
 
     // -- RENDERER --
-    public final ForgeConfigSpec.ConfigValue<Float> shadowRadius;
+    public final ForgeConfigSpec.ConfigValue<Double> shadowRadius;
 
     // -- Constructor --
 
@@ -25,8 +25,8 @@ public class Client {
 
         builder.push("Renderer");
         shadowRadius = builder
-                .comment("Entity shadow cast size on the ground.", "Example: [0.4F]")
-                .define("shadow-radius", 0.4F);
+                .comment("Entity shadow cast size on the ground.", "Example: [0.4]")
+                .define("shadow-radius", 0.4);
         builder.pop();
 
     } // Constructor Client ()

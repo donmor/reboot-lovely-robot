@@ -32,9 +32,9 @@ import software.bernie.geckolib3.core.manager.SingletonAnimationFactory;
 
 import javax.annotation.Nullable;
 
-import static net.msymbios.rlovelyr.item.LovelyRobotItems.VANILLA_SPAWN;
+import static net.msymbios.rlovelyr.item.LovelyRobotItems.DRAGON_SPAWN;
 
-public class VanillaEntity extends InternalEntity implements IAnimatable {
+public class DragonEntity extends InternalEntity implements IAnimatable {
 
     // -- Variables --
 
@@ -42,11 +42,11 @@ public class VanillaEntity extends InternalEntity implements IAnimatable {
 
     // -- Constructor --
 
-    public VanillaEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public DragonEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
         rotate(Rotation.getRandom(this.getRandom()));
-        this.variant = EntityVariant.Vanilla;
-    } // Constructor VanillaEntity ()
+        this.variant = EntityVariant.Dragon;
+    } // Constructor DragonEntity ()
 
     // -- Inherited Methods --
 
@@ -61,12 +61,12 @@ public class VanillaEntity extends InternalEntity implements IAnimatable {
 
     @Override
     public ItemStack setDropItem() {
-        return new ItemStack(VANILLA_SPAWN.get(), 1);
+        return new ItemStack(DRAGON_SPAWN.get(), 1);
     } // setDropItem ()
 
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor, @NotNull DifficultyInstance instance, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
-        this.variant = EntityVariant.Vanilla;
+        this.variant = EntityVariant.Dragon;
         this.setTexture(InternalMetric.getRandomTextureID(this.variant));
         this.setMaxLevel(getAttribute(EntityAttribute.MAX_LEVEL));
         return super.finalizeSpawn(levelAccessor, instance, mobSpawnType, spawnGroupData, compoundTag);
@@ -96,13 +96,13 @@ public class VanillaEntity extends InternalEntity implements IAnimatable {
      */
     public static AttributeSupplier createAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, LovelyRobotConfig.COMMON.vanillaAttributeMaxHealth.get())
-                .add(Attributes.ATTACK_DAMAGE, LovelyRobotConfig.COMMON.vanillaAttributeAttackDamage.get())
-                .add(Attributes.ATTACK_SPEED, LovelyRobotConfig.COMMON.vanillaAttributeAttackSpeed.get())
-                .add(Attributes.MOVEMENT_SPEED, LovelyRobotConfig.COMMON.vanillaAttributeMovementSpeed.get())
-                .add(Attributes.ARMOR, LovelyRobotConfig.COMMON.vanillaAttributeArmor.get())
-                .add(Attributes.ARMOR_TOUGHNESS, LovelyRobotConfig.COMMON.vanillaAttributeArmorToughness.get())
+                .add(Attributes.MAX_HEALTH, LovelyRobotConfig.COMMON.dragonAttributeMaxHealth.get())
+                .add(Attributes.ATTACK_DAMAGE, LovelyRobotConfig.COMMON.dragonAttributeAttackDamage.get())
+                .add(Attributes.ATTACK_SPEED, LovelyRobotConfig.COMMON.dragonAttributeAttackSpeed.get())
+                .add(Attributes.MOVEMENT_SPEED, LovelyRobotConfig.COMMON.dragonAttributeMovementSpeed.get())
+                .add(Attributes.ARMOR, LovelyRobotConfig.COMMON.dragonAttributeArmor.get())
+                .add(Attributes.ARMOR_TOUGHNESS, LovelyRobotConfig.COMMON.dragonAttributeArmorToughness.get())
                 .build();
     } // createAttributes ()
 
-} // Class VanillaEntity
+} // Class DragonEntity

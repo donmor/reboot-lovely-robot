@@ -6,8 +6,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.msymbios.rlovelyr.common.util.ObjectUtil;
-import net.msymbios.rlovelyr.common.util.internal.Version;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
 import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.LovelyRobotItems;
@@ -30,7 +28,7 @@ public class LovelyRobot {
     /**
      * The mod's version.
      */
-    public static final Version VERSION = new Version(ObjectUtil.coalesce(LovelyRobot.class.getPackage().getSpecificationVersion(), "99999.0.0.0"));
+    //public static final Version VERSION = new Version(ObjectUtil.coalesce(LovelyRobot.class.getPackage().getSpecificationVersion(), "99999.0.0.0"));
 
     /**
      * The mod's logger.
@@ -45,20 +43,22 @@ public class LovelyRobot {
         event.addListener(this::clientSetup);
         event.addListener(this::commonSetup);
 
+        LovelyRobotConfig.register();
         LovelyRobotEntities.register(event);
         LovelyRobotItems.register(event);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-        LovelyRobotConfig.register();
     } // LovelyRobot ()
 
     // -- Methods --
     private void clientSetup(final FMLClientSetupEvent event) {
         LovelyRobotEntities.registerRender();
+        LovelyRobotItems.registerModel(event);
     } // clientSetup ()
 
-    private void commonSetup(final FMLCommonSetupEvent event) { } // commonSetup ()
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        //NetworkHandler.register();
+    } // commonSetup ()
 
 } // Class LovelyRobot
