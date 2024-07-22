@@ -27,7 +27,7 @@ public class LovelyRobotItems {
     public static final RegistryObject<Item> BUNNY_SPAWN = register(LovelyRobotID.BUNNY_SPAWN, LovelyRobotEntities.BUNNY, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> BUNNY2_SPAWN = register(LovelyRobotID.BUNNY2_SPAWN, LovelyRobotEntities.BUNNY2, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> DRAGON_SPAWN = register(LovelyRobotID.DRAGON_SPAWN, LovelyRobotEntities.DRAGON, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
-    //public static final RegistryObject<Item> HONEY_SPAWN = register(LovelyRobotID.HONEY_SPAWN, LovelyRobotEntities.HONEY, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
+    public static final RegistryObject<Item> HONEY_SPAWN = register(LovelyRobotID.HONEY_SPAWN, LovelyRobotEntities.HONEY, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     //public static final RegistryObject<Item> KITSUNE_SPAWN = register(LovelyRobotID.KITSUNE_SPAWN, LovelyRobotEntities.KITSUNE, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     //public static final RegistryObject<Item> NEKO_SPAWN = register(LovelyRobotID.NEKO_SPAWN, LovelyRobotEntities.NEKO, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> VANILLA_SPAWN = register(LovelyRobotID.VANILLA_SPAWN, LovelyRobotEntities.VANILLA, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
@@ -47,7 +47,7 @@ public class LovelyRobotItems {
             registerModel(LovelyRobotItems.BUNNY_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
             registerModel(LovelyRobotItems.BUNNY2_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
             registerModel(LovelyRobotItems.DRAGON_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            //registerModel(LovelyRobotItems.HONEY_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.HONEY_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
             //registerModel(LovelyRobotItems.KITSUNE_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
             //registerModel(LovelyRobotItems.NEKO_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
             registerModel(LovelyRobotItems.VANILLA_SPAWN, "variant", LovelyRobotID.STAT_COLOR);

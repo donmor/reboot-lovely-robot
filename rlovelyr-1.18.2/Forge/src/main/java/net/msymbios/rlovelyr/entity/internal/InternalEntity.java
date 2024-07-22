@@ -1,5 +1,6 @@
 package net.msymbios.rlovelyr.entity.internal;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -27,6 +28,8 @@ import net.msymbios.rlovelyr.item.utils.Utility;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+
+import java.util.Objects;
 
 import static net.msymbios.rlovelyr.item.utils.Utility.invertBoolean;
 
@@ -352,6 +355,8 @@ public abstract class InternalEntity extends TamableAnimal {
         String customName = Utility.getEntityCustomName(this);
         if (!customName.isEmpty()) nbt.putString(LovelyRobotID.STAT_CUSTOM_NAME, customName);
 
+        nbt.putString(LovelyRobotID.STAT_OWNER, Objects.requireNonNull(this.getOwner()).getScoreboardName());
+
         nbt.putString(LovelyRobotID.STAT_TYPE, LovelyRobotID.getTranslation(this.variant));
         nbt.putInt(LovelyRobotID.STAT_COLOR, this.getTextureID());
 
@@ -365,6 +370,9 @@ public abstract class InternalEntity extends TamableAnimal {
         nbt.putInt(LovelyRobotID.STAT_PROJECTILE_PROTECTION, this.getProjectileProtection());
 
         dropItem.setTag(nbt);
+
+        if (!customName.isEmpty()) dropItem.setHoverName(Component.nullToEmpty(customName).copy().append(Utility.getRandomTitle()).withStyle(ChatFormatting.DARK_PURPLE));
+
         ItemEntity itemEntity = new ItemEntity(this.level, this.getX(), this.getY() + (double)0.0F, this.getZ(), dropItem);
         itemEntity.setDefaultPickUpDelay();
         this.level.addFreshEntity(itemEntity);
@@ -455,7 +463,6 @@ public abstract class InternalEntity extends TamableAnimal {
         this.entityData.define(NOTIFICATION, true);
     } // defineSynchedData ()
 
-
     @Override
     public void addAdditionalSaveData(CompoundTag dataNBT) {
         super.addAdditionalSaveData(dataNBT);
@@ -476,6 +483,7 @@ public abstract class InternalEntity extends TamableAnimal {
         dataNBT.putFloat("BaseY", this.getBaseY());
         dataNBT.putFloat("BaseZ", this.getBaseZ());
 
+        dataNBT.putString("Owner", Objects.requireNonNull(this.getOwner()).getScoreboardName());
         dataNBT.putBoolean("Notification", getNotification());
     } // addAdditionalSaveData ()
 

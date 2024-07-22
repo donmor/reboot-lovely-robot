@@ -2,8 +2,10 @@ package net.msymbios.rlovelyr.entity.internal.enums;
 
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public enum EntityTexture {
 
@@ -28,6 +30,7 @@ public enum EntityTexture {
 
     // -- Variables --
     private static final EntityTexture[] CODEC = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityTexture::getId)).toArray(EntityTexture[]::new);
+    public static final List<EntityTexture> VALUES = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityTexture::getId)).toList();
 
     private final int m_id;
 
@@ -60,5 +63,15 @@ public enum EntityTexture {
     public String getName() {
         return this.m_name;
     } // getName ()
+
+
+    /**
+     * @param key the key used to identify the blockling type.
+     * @return the blockling type with the given key, or grass if it does not exist.
+     */
+    @Nonnull
+    public static EntityTexture find(@Nonnull String key) {
+        return VALUES.stream().filter(type -> type.m_name.equals(key)).findFirst().orElse(EntityTexture.RANDOM);
+    } // find ()
 
 } // Enum EntityTexture

@@ -29,13 +29,13 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.enums.*;
-import net.msymbios.rlovelyr.util.Utility;
+import net.msymbios.rlovelyr.util.internal.Utility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 import static net.msymbios.rlovelyr.item.LovelyRobotItems.ROBOT_CORE;
-import static net.msymbios.rlovelyr.util.Utility.invertBoolean;
+import static net.msymbios.rlovelyr.util.internal.Utility.invertBoolean;
 
 public abstract class InternalEntity extends TameableEntity {
 
@@ -425,6 +425,8 @@ public abstract class InternalEntity extends TameableEntity {
                 handleState(stack);
                 handleAutoAttack(stack);
                 handleDisplayInteraction(stack);
+
+                handleInteract(player);
                 return ActionResult.SUCCESS;
             } else {
                 return actionResult;
@@ -451,6 +453,7 @@ public abstract class InternalEntity extends TameableEntity {
     } // canInteractAutoAttack ()
 
     // -- Logic Methods --
+    public void handleInteract (PlayerEntity player) {}
 
     public void addExp (int value) {
         int addExp = value;

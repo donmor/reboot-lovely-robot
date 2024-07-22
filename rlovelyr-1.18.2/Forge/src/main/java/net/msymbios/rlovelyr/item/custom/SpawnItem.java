@@ -29,11 +29,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.internal.InternalEntity;
 import net.msymbios.rlovelyr.entity.internal.enums.EntityTexture;
-import net.msymbios.rlovelyr.item.LovelyRobotItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -60,6 +58,7 @@ public class SpawnItem extends ForgeSpawnEggItem {
         if (stack.hasTag()) {
             CompoundTag nbt = stack.getOrCreateTag();
             addNameTooltip(tooltip, nbt);
+            addOwnerTooltip(tooltip, nbt);
             addColorTooltip(tooltip, nbt);
             addLevelTooltip(tooltip, nbt);
         } else {

@@ -6,6 +6,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.msymbios.rlovelyr.command.LovelyRobotCommands;
+import net.msymbios.rlovelyr.common.network.NetworkHandler;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
 import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.LovelyRobotItems;
@@ -40,15 +42,16 @@ public class LovelyRobot {
     public LovelyRobot() {
         IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
 
-        event.addListener(this::clientSetup);
         event.addListener(this::commonSetup);
+        event.addListener(this::clientSetup);
 
-        LovelyRobotConfig.register();
         LovelyRobotEntities.register(event);
         LovelyRobotItems.register(event);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        LovelyRobotConfig.register();
     } // LovelyRobot ()
 
     // -- Methods --
@@ -58,7 +61,8 @@ public class LovelyRobot {
     } // clientSetup ()
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        //NetworkHandler.register();
+        LovelyRobotCommands.register();
+        NetworkHandler.register();
     } // commonSetup ()
 
 } // Class LovelyRobot

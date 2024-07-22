@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-import static net.msymbios.rlovelyr.util.Utility.*;
+import static net.msymbios.rlovelyr.util.internal.Utility.*;
 
 public class SpawnItem extends SpawnEggItem {
 

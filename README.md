@@ -14,6 +14,7 @@
     <a href="https://discord.gg/KdZZMj89bU">
         <img alt="Discord" src="https://img.shields.io/discord/1156134479149158402?logo=Discord">
     </a>
+    <iframe src="https://github.com/sponsors/heria-zone/button" title="Sponsor heria-zone" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
 </p>
 
 <p align="center">

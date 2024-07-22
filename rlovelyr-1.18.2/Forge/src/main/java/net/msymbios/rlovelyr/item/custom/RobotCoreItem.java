@@ -32,6 +32,7 @@ public class RobotCoreItem extends Item {
         if (stack.hasTag()) {
             CompoundTag nbt = stack.getOrCreateTag();
             addNameTooltip(tooltip, nbt);
+            addOwnerTooltip(tooltip, nbt);
             addTypeTooltip(tooltip, nbt);
             addColorTooltip(tooltip, nbt);
             addLevelTooltip(tooltip, nbt);

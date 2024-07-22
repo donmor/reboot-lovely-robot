@@ -23,6 +23,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 	modImplementation "software.bernie.geckolib:${fabric_geckolib}"
+
+	// TypeTools dependency
+	implementation 'net.jodah:typetools:0.6.2'
 }
 
 processResources {

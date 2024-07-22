@@ -22,6 +22,7 @@ public class LovelyRobotEntities {
     public static final RegistryObject<EntityType<BunnyEntity>> BUNNY = register(LovelyRobotID.VARIANT_BUNNY, MobCategory.CREATURE, LovelyRobotConfig.COMMON.width.get().floatValue(), LovelyRobotConfig.COMMON.height.get().floatValue(), BunnyEntity::new);
     public static final RegistryObject<EntityType<Bunny2Entity>> BUNNY2 = register(LovelyRobotID.VARIANT_BUNNY2, MobCategory.CREATURE, LovelyRobotConfig.COMMON.width.get().floatValue(), LovelyRobotConfig.COMMON.height.get().floatValue(), Bunny2Entity::new);
     public static final RegistryObject<EntityType<DragonEntity>> DRAGON = register(LovelyRobotID.VARIANT_DRAGON, MobCategory.CREATURE, LovelyRobotConfig.COMMON.width.get().floatValue(), LovelyRobotConfig.COMMON.height.get().floatValue(), DragonEntity::new);
+    public static final RegistryObject<EntityType<HoneyEntity>> HONEY = register(LovelyRobotID.VARIANT_HONEY, MobCategory.CREATURE, LovelyRobotConfig.COMMON.width.get().floatValue(), LovelyRobotConfig.COMMON.height.get().floatValue(), HoneyEntity::new);
     public static final RegistryObject<EntityType<VanillaEntity>> VANILLA = register(LovelyRobotID.VARIANT_VANILLA, MobCategory.CREATURE, LovelyRobotConfig.COMMON.width.get().floatValue(), LovelyRobotConfig.COMMON.height.get().floatValue(), VanillaEntity::new);
 
     // -- Methods --
@@ -40,7 +41,7 @@ public class LovelyRobotEntities {
         event.put(LovelyRobotEntities.BUNNY.get(), BunnyEntity.createAttributes());
         event.put(LovelyRobotEntities.BUNNY2.get(), Bunny2Entity.createAttributes());
         event.put(LovelyRobotEntities.DRAGON.get(), DragonEntity.createAttributes());
-        //event.put(LovelyRobotEntities.HONEY.get(), HoneyEntity.createAttributes().build());
+        event.put(LovelyRobotEntities.HONEY.get(), HoneyEntity.createAttributes());
         //event.put(LovelyRobotEntities.KITSUNE.get(), KitsuneEntity.createAttributes().build());
         //event.put(LovelyRobotEntities.NEKO.get(), NekoEntity.createAttributes().build());
         event.put(LovelyRobotEntities.VANILLA.get(), VanillaEntity.createAttributes());
@@ -53,7 +54,7 @@ public class LovelyRobotEntities {
         EntityRenderers.register(LovelyRobotEntities.BUNNY.get(), BunnyRenderer::new);
         EntityRenderers.register(LovelyRobotEntities.BUNNY2.get(), Bunny2Renderer::new);
         EntityRenderers.register(LovelyRobotEntities.DRAGON.get(), DragonRenderer::new);
-        //EntityRenderers.register(LovelyRobotEntities.HONEY.get(), HoneyRenderer::new);
+        EntityRenderers.register(LovelyRobotEntities.HONEY.get(), HoneyRenderer::new);
         //EntityRenderers.register(LovelyRobotEntities.KITSUNE.get(), KitsuneRenderer::new);
         //EntityRenderers.register(LovelyRobotEntities.NEKO.get(), NekoRenderer::new);
         EntityRenderers.register(LovelyRobotEntities.VANILLA.get(), VanillaRenderer::new);

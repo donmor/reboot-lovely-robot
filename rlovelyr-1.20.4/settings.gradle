@@ -17,5 +17,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "${mod_name}"
+rootProject.name = "${mod_name} ${minecraft_version}"
 include("Fabric")

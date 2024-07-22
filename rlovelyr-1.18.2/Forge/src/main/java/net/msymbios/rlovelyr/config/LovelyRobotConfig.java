@@ -1,7 +1,6 @@
 package net.msymbios.rlovelyr.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -81,6 +80,19 @@ public class LovelyRobotConfig {
             put(EntityAttribute.BASE_DEFENSE_WARP_RANGE, 10F);
         }});
 
+        InternalMetric.ATTRIBUTES.put(EntityVariant.Honey, new HashMap<>() {{
+            put(EntityAttribute.MAX_LEVEL,               COMMON.honeyAttributeMaxLevel.get().floatValue());
+            put(EntityAttribute.MAX_HEALTH,              COMMON.honeyAttributeMaxHealth.get().floatValue());
+            put(EntityAttribute.ATTACK_DAMAGE,           COMMON.honeyAttributeAttackDamage.get().floatValue());
+            put(EntityAttribute.ATTACK_SPEED,            COMMON.honeyAttributeAttackSpeed.get().floatValue());
+            put(EntityAttribute.MOVEMENT_SPEED,          COMMON.honeyAttributeMovementSpeed.get().floatValue());
+            put(EntityAttribute.DEFENSE,                 COMMON.honeyAttributeDefense.get().floatValue());
+            put(EntityAttribute.ARMOR,                   COMMON.honeyAttributeArmor.get().floatValue());
+            put(EntityAttribute.ARMOR_TOUGHNESS,         COMMON.honeyAttributeArmorToughness.get().floatValue());
+            put(EntityAttribute.BASE_DEFENSE_RANGE,      15F);
+            put(EntityAttribute.BASE_DEFENSE_WARP_RANGE, 10F);
+        }});
+
         InternalMetric.ATTRIBUTES.put(EntityVariant.Vanilla, new HashMap<>() {{
             put(EntityAttribute.MAX_LEVEL,               COMMON.vanillaAttributeMaxLevel.get().floatValue());
             put(EntityAttribute.MAX_HEALTH,              COMMON.vanillaAttributeMaxHealth.get().floatValue());
@@ -98,12 +110,8 @@ public class LovelyRobotConfig {
     // -- Methods --
     public static void register() {
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        ModContainer activeContainer = ModLoadingContext.get().getActiveContainer();
-        activeContainer.addConfig(new ModConfig(ModConfig.Type.COMMON, COMMON_SPEC, activeContainer));
-        activeContainer.addConfig(new ModConfig(ModConfig.Type.CLIENT, CLIENT_SPEC, activeContainer));
-
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
     } // register ()
 
 } // Class LovelyRobotConfig

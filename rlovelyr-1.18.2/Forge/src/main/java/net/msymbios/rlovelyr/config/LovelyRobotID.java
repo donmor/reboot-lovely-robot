@@ -59,6 +59,7 @@ public class LovelyRobotID {
 
     // -- Stats --
     public static final String STAT_CUSTOM_NAME = "custom_name";
+    public static final String STAT_OWNER = "owner";
     public static final String STAT_COLOR = "color";
     public static final String STAT_TYPE = "type";
     public static final String STAT_MAX_LEVEL = "max_level";

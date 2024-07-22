@@ -80,6 +80,16 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmorToughness;
 
+    // DRAGON
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> honeyAttributeMaxLevel;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeMaxHealth;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeAttackDamage;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeAttackSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeMovementSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeDefense;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmor;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmorToughness;
+
     // VANILLA
     @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> vanillaAttributeMaxLevel;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeMaxHealth;
@@ -351,6 +361,48 @@ public class Common {
                 .define("armor", 0.0);
 
         dragonAttributeArmorToughness = builder
+                .comment("Armor Toughness", "Example: [0.0]")
+                .worldRestart()
+                .define("armor-toughness",0.0);
+        builder.pop();
+
+        builder.push("Honey");
+        honeyAttributeMaxLevel = builder
+                .comment("Maximum Level", "Example: [200]")
+                .worldRestart()
+                .define("max-level", 200);
+
+        honeyAttributeMaxHealth = builder
+                .comment("Maximum Health", "Example: [30.0]")
+                .worldRestart()
+                .define("max-health", 30.0);
+
+        honeyAttributeAttackDamage = builder
+                .comment("Attack Damage", "Example: [5.0]")
+                .worldRestart()
+                .define("attack-damage", 5.0);
+
+        honeyAttributeAttackSpeed = builder
+                .comment("Attack Speed", "Example: [ 1.2]")
+                .worldRestart()
+                .define("attack-speed",  1.2);
+
+        honeyAttributeMovementSpeed = builder
+                .comment("Movement Speed", "Example: [0.4]")
+                .worldRestart()
+                .define("movement-speed", 0.4);
+
+        honeyAttributeDefense = builder
+                .comment("Defence", "Example: [7.0]")
+                .worldRestart()
+                .define("defence", 7.0);
+
+        honeyAttributeArmor = builder
+                .comment("Armor", "Example: [0.0]")
+                .worldRestart()
+                .define("armor", 0.0);
+
+        honeyAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
                 .worldRestart()
                 .define("armor-toughness",0.0);

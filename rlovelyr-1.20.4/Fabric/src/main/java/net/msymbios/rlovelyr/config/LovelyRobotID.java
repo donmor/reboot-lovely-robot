@@ -1,7 +1,16 @@
 package net.msymbios.rlovelyr.config;
 
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.msymbios.rlovelyr.LovelyRobot;
+import net.msymbios.rlovelyr.entity.attribute.attributes.EnumAttribute;
+import net.msymbios.rlovelyr.entity.attribute.attributes.numbers.FloatAttribute;
+import net.msymbios.rlovelyr.entity.attribute.attributes.numbers.IntAttribute;
+import net.msymbios.rlovelyr.entity.attribute.attributes.numbers.ModifiableFloatAttribute;
+import net.msymbios.rlovelyr.entity.attribute.attributes.numbers.ModifiableIntAttribute;
+import net.msymbios.rlovelyr.entity.attribute.messages.IsEnabledMessage;
+import net.msymbios.rlovelyr.network.message.NameMessage;
 
 public class LovelyRobotID {
 
@@ -146,7 +155,46 @@ public class LovelyRobotID {
     public static final String TRANS_MSG_RED = "msg.item.red";
     public static final String TRANS_MSG_BLACK = "msg.item.black";
 
+    // MESSAGES
+    public static final Identifier NET_MESSAGE_ENABLED = getId("net_message.is_enabled");
+    public static final Identifier NET_MESSAGE_ENUM_ATTRIBUTE = getId("net_message.enum_attribute");
+    public static final Identifier NET_MESSAGE_FLOAT_VALUE = getId("net_message.float_value");
+    public static final Identifier NET_MESSAGE_MODIFIABLE_FLOAT = getId("net_message.modifiable_float_base_value");
+    public static final Identifier NET_MESSAGE_INT_VALUE = getId("net_message.int_value");
+    public static final Identifier NET_MESSAGE_MODIFIABLE_INT = getId("net_message.modifiable_int_base_value");
+
+    public static final Identifier NET_MESSAGE_NAME = getId("net_message.name");
+
     // -- Methods --
+
+    /**
+     * A translation text component for a tab.
+     */
+    public static MutableText getTabTranslation(final String key) {
+        return getTranslation("tab." + key);
+    } // getTabTranslation ()
+
+    /**
+     * Represents a translation text component for an attribute.
+     */
+    public static MutableText getAttributeTranslation(final String key, Object... objects) {
+        return getTranslation("attribute." + key, objects);
+    } // getAttributeTranslation ()
+
+    /**
+     * Represents a translation text component for a skill.
+     */
+    public static MutableText getSkillTranslation(final String key) {
+        return getTranslation("skill." + key);
+    } // getSkillTranslation ()
+
+    public static MutableText getTranslation(final String key) {
+        return Text.translatable(LovelyRobot.MODID + "." + key);
+    } // getTranslation ()
+
+    public static MutableText getTranslation(final String key, Object... objects) {
+        return Text.translatable(LovelyRobot.MODID + "." + key, objects);
+    } // getTranslation ()
 
     public static Identifier getId(final String path) {
         return new Identifier(LovelyRobot.MODID, path);
