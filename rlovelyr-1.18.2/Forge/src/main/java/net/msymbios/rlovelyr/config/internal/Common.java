@@ -80,7 +80,7 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmorToughness;
 
-    // DRAGON
+    // HONEY
     @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> honeyAttributeMaxLevel;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeMaxHealth;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeAttackDamage;
@@ -89,6 +89,26 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmorToughness;
+
+    // KITSUNE
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> kitsuneAttributeMaxLevel;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeMaxHealth;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeAttackDamage;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeAttackSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeMovementSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeDefense;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeArmor;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeArmorToughness;
+
+    // NEKO
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> nekoAttributeMaxLevel;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeMaxHealth;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeAttackDamage;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeAttackSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeMovementSpeed;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeDefense;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeArmor;
+    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeArmorToughness;
 
     // VANILLA
     @Nonnull public final ForgeConfigSpec.ConfigValue<Integer> vanillaAttributeMaxLevel;
@@ -403,6 +423,90 @@ public class Common {
                 .define("armor", 0.0);
 
         honeyAttributeArmorToughness = builder
+                .comment("Armor Toughness", "Example: [0.0]")
+                .worldRestart()
+                .define("armor-toughness",0.0);
+        builder.pop();
+
+        builder.push("Kitsune");
+        kitsuneAttributeMaxLevel = builder
+                .comment("Maximum Level", "Example: [200]")
+                .worldRestart()
+                .define("max-level", 200);
+
+        kitsuneAttributeMaxHealth = builder
+                .comment("Maximum Health", "Example: [30.0]")
+                .worldRestart()
+                .define("max-health", 30.0);
+
+        kitsuneAttributeAttackDamage = builder
+                .comment("Attack Damage", "Example: [5.0]")
+                .worldRestart()
+                .define("attack-damage", 5.0);
+
+        kitsuneAttributeAttackSpeed = builder
+                .comment("Attack Speed", "Example: [ 1.2]")
+                .worldRestart()
+                .define("attack-speed",  1.2);
+
+        kitsuneAttributeMovementSpeed = builder
+                .comment("Movement Speed", "Example: [0.4]")
+                .worldRestart()
+                .define("movement-speed", 0.4);
+
+        kitsuneAttributeDefense = builder
+                .comment("Defence", "Example: [7.0]")
+                .worldRestart()
+                .define("defence", 7.0);
+
+        kitsuneAttributeArmor = builder
+                .comment("Armor", "Example: [0.0]")
+                .worldRestart()
+                .define("armor", 0.0);
+
+        kitsuneAttributeArmorToughness = builder
+                .comment("Armor Toughness", "Example: [0.0]")
+                .worldRestart()
+                .define("armor-toughness",0.0);
+        builder.pop();
+
+        builder.push("Neko");
+        nekoAttributeMaxLevel = builder
+                .comment("Maximum Level", "Example: [200]")
+                .worldRestart()
+                .define("max-level", 200);
+
+        nekoAttributeMaxHealth = builder
+                .comment("Maximum Health", "Example: [30.0]")
+                .worldRestart()
+                .define("max-health", 30.0);
+
+        nekoAttributeAttackDamage = builder
+                .comment("Attack Damage", "Example: [5.0]")
+                .worldRestart()
+                .define("attack-damage", 5.0);
+
+        nekoAttributeAttackSpeed = builder
+                .comment("Attack Speed", "Example: [ 1.2]")
+                .worldRestart()
+                .define("attack-speed",  1.2);
+
+        nekoAttributeMovementSpeed = builder
+                .comment("Movement Speed", "Example: [0.4]")
+                .worldRestart()
+                .define("movement-speed", 0.4);
+
+        nekoAttributeDefense = builder
+                .comment("Defence", "Example: [7.0]")
+                .worldRestart()
+                .define("defence", 7.0);
+
+        nekoAttributeArmor = builder
+                .comment("Armor", "Example: [0.0]")
+                .worldRestart()
+                .define("armor", 0.0);
+
+        nekoAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
                 .worldRestart()
                 .define("armor-toughness",0.0);

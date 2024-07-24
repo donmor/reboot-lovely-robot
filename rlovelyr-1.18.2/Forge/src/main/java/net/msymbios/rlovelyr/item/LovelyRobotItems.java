@@ -28,8 +28,8 @@ public class LovelyRobotItems {
     public static final RegistryObject<Item> BUNNY2_SPAWN = register(LovelyRobotID.BUNNY2_SPAWN, LovelyRobotEntities.BUNNY2, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> DRAGON_SPAWN = register(LovelyRobotID.DRAGON_SPAWN, LovelyRobotEntities.DRAGON, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> HONEY_SPAWN = register(LovelyRobotID.HONEY_SPAWN, LovelyRobotEntities.HONEY, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
-    //public static final RegistryObject<Item> KITSUNE_SPAWN = register(LovelyRobotID.KITSUNE_SPAWN, LovelyRobotEntities.KITSUNE, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
-    //public static final RegistryObject<Item> NEKO_SPAWN = register(LovelyRobotID.NEKO_SPAWN, LovelyRobotEntities.NEKO, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
+    public static final RegistryObject<Item> KITSUNE_SPAWN = register(LovelyRobotID.KITSUNE_SPAWN, LovelyRobotEntities.KITSUNE, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
+    public static final RegistryObject<Item> NEKO_SPAWN = register(LovelyRobotID.NEKO_SPAWN, LovelyRobotEntities.NEKO, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
     public static final RegistryObject<Item> VANILLA_SPAWN = register(LovelyRobotID.VANILLA_SPAWN, LovelyRobotEntities.VANILLA, LovelyRobotItemsGroup.LOVELY_ROBOT, Rarity.RARE, 1);
 
     // -- Methods --
@@ -44,14 +44,13 @@ public class LovelyRobotItems {
 
     public static void registerModel(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            registerModel(LovelyRobotItems.BUNNY_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            registerModel(LovelyRobotItems.BUNNY2_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            registerModel(LovelyRobotItems.DRAGON_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            registerModel(LovelyRobotItems.HONEY_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            //registerModel(LovelyRobotItems.KITSUNE_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            //registerModel(LovelyRobotItems.NEKO_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            registerModel(LovelyRobotItems.VANILLA_SPAWN, "variant", LovelyRobotID.STAT_COLOR);
-            //ItemProperties.register(LovelyRobotItems.VANILLA_SPAWN.get(), LovelyRobotID.getId("variant"), (stack, world, entity, id) -> stack.getTag() != null ? stack.getTag().getInt(LovelyRobotID.STAT_COLOR) : 0);
+            registerModel(LovelyRobotItems.BUNNY_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.BUNNY2_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.DRAGON_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.HONEY_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.KITSUNE_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.NEKO_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
+            registerModel(LovelyRobotItems.VANILLA_SPAWN, LovelyRobotID.ITEM_TAG_VARIANT, LovelyRobotID.STAT_COLOR);
         });
     } // registerModel ()
 

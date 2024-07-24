@@ -26,6 +26,8 @@ public class LovelyRobotID {
     public static final String NEKO_SPAWN = "neko_spawn";
     public static final String VANILLA_SPAWN = "vanilla_spawn";
 
+    public static final String ITEM_TAG_VARIANT = "variant";
+
     // -- Entities --
 
     // ROBOTS

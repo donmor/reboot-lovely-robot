@@ -19,6 +19,9 @@ public class Utility {
 
     private static final Random random = new Random();
 
+    // Define default formatting for the tooltip
+    private static final ChatFormatting defaultFormatting = ChatFormatting.AQUA;
+
     // -- Methods --
 
     /**
@@ -71,9 +74,15 @@ public class Utility {
      * @param nbt The NBT compound containing the entity texture and custom name
      * */
     public static void addNameTooltip(List<Component> tooltip, CompoundTag nbt) {
+        // Retrieve the customName & texture information from the NBT compound
         EntityTexture texture = EntityTexture.byId(nbt.getInt(LovelyRobotID.STAT_COLOR));
         String customName = nbt.getString(LovelyRobotID.STAT_CUSTOM_NAME);
-        if (!customName.isEmpty()) tooltip.add(Component.nullToEmpty("Name: ").copy().withStyle(ChatFormatting.DARK_GRAY).append(Component.nullToEmpty(customName).copy().withStyle(getFormattingColor(texture))));
+
+        // Define and text formatting for the tooltip
+        var textFormatting = Utility.getFormattingColor(texture);
+
+        // Add the customName tooltip if the customName is not empty
+        if (!customName.isEmpty()) tooltip.add(Component.nullToEmpty("Name: ").copy().withStyle(defaultFormatting).append(Component.nullToEmpty(customName).copy().withStyle(textFormatting)));
     } // addNameTooltip ()
 
     /**
@@ -83,8 +92,14 @@ public class Utility {
      * @param nbt The NBT compound containing the entity texture and custom name
      * */
     public static void addOwnerTooltip(List<Component> tooltip, CompoundTag nbt) {
+        // Define text formatting for the tooltip
+        var textFormatting = ChatFormatting.GREEN;
+
+        // Retrieve the ownerName information from the NBT compound
         String ownerName = nbt.getString(LovelyRobotID.STAT_OWNER);
-        if (!ownerName.isEmpty()) tooltip.add(Component.nullToEmpty("Owner: ").copy().withStyle(ChatFormatting.GRAY).append(Component.nullToEmpty(ownerName).copy().withStyle(ChatFormatting.GREEN)));
+
+        // Add the ownerName tooltip if the owner is not empty
+        if (!ownerName.isEmpty()) tooltip.add(Component.nullToEmpty("Owner: ").copy().withStyle(defaultFormatting).append(Component.nullToEmpty(ownerName).copy().withStyle(textFormatting)));
     } // addOwnerTooltip ()
 
     /**
@@ -94,8 +109,7 @@ public class Utility {
      * @param nbt The NBT compound containing the type information
      * */
     public static void addTypeTooltip(List<Component> tooltip, CompoundTag nbt) {
-        // Define default and text formatting for the tooltip
-        var defaultFormatting = ChatFormatting.GRAY;
+        // Define and text formatting for the tooltip
         var textFormatting = ChatFormatting.WHITE;
 
         // Retrieve the type information from the NBT compound
@@ -115,8 +129,7 @@ public class Utility {
         // Retrieve the texture information from the NBT compound
         var texture = EntityTexture.byId(nbt.getInt(LovelyRobotID.STAT_COLOR));
 
-        // Define default and text formatting for the tooltip
-        var defaultFormatting = ChatFormatting.GRAY;
+        // Define and text formatting for the tooltip
         var textFormatting = Utility.getFormattingColor(texture);
 
         // Add the color tooltip to the list
@@ -130,8 +143,7 @@ public class Utility {
      * @param nbt The NBT compound containing the level information
      * */
     public static void addLevelTooltip(List<Component> tooltip, CompoundTag nbt) {
-        // Define default and text formatting for the tooltip
-        var defaultFormatting = ChatFormatting.GRAY;
+        // Define and text formatting for the tooltip
         var textFormatting = ChatFormatting.GOLD;
 
         // Retrieve the level information from the NBT compound

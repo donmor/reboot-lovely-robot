@@ -93,6 +93,32 @@ public class LovelyRobotConfig {
             put(EntityAttribute.BASE_DEFENSE_WARP_RANGE, 10F);
         }});
 
+        InternalMetric.ATTRIBUTES.put(EntityVariant.Kitsune, new HashMap<>() {{
+            put(EntityAttribute.MAX_LEVEL,               COMMON.kitsuneAttributeMaxLevel.get().floatValue());
+            put(EntityAttribute.MAX_HEALTH,              COMMON.kitsuneAttributeMaxHealth.get().floatValue());
+            put(EntityAttribute.ATTACK_DAMAGE,           COMMON.kitsuneAttributeAttackDamage.get().floatValue());
+            put(EntityAttribute.ATTACK_SPEED,            COMMON.kitsuneAttributeAttackSpeed.get().floatValue());
+            put(EntityAttribute.MOVEMENT_SPEED,          COMMON.kitsuneAttributeMovementSpeed.get().floatValue());
+            put(EntityAttribute.DEFENSE,                 COMMON.kitsuneAttributeDefense.get().floatValue());
+            put(EntityAttribute.ARMOR,                   COMMON.kitsuneAttributeArmor.get().floatValue());
+            put(EntityAttribute.ARMOR_TOUGHNESS,         COMMON.kitsuneAttributeArmorToughness.get().floatValue());
+            put(EntityAttribute.BASE_DEFENSE_RANGE,      15F);
+            put(EntityAttribute.BASE_DEFENSE_WARP_RANGE, 10F);
+        }});
+
+        InternalMetric.ATTRIBUTES.put(EntityVariant.Neko, new HashMap<>() {{
+            put(EntityAttribute.MAX_LEVEL,               COMMON.nekoAttributeMaxLevel.get().floatValue());
+            put(EntityAttribute.MAX_HEALTH,              COMMON.nekoAttributeMaxHealth.get().floatValue());
+            put(EntityAttribute.ATTACK_DAMAGE,           COMMON.nekoAttributeAttackDamage.get().floatValue());
+            put(EntityAttribute.ATTACK_SPEED,            COMMON.nekoAttributeAttackSpeed.get().floatValue());
+            put(EntityAttribute.MOVEMENT_SPEED,          COMMON.nekoAttributeMovementSpeed.get().floatValue());
+            put(EntityAttribute.DEFENSE,                 COMMON.nekoAttributeDefense.get().floatValue());
+            put(EntityAttribute.ARMOR,                   COMMON.nekoAttributeArmor.get().floatValue());
+            put(EntityAttribute.ARMOR_TOUGHNESS,         COMMON.nekoAttributeArmorToughness.get().floatValue());
+            put(EntityAttribute.BASE_DEFENSE_RANGE,      15F);
+            put(EntityAttribute.BASE_DEFENSE_WARP_RANGE, 10F);
+        }});
+
         InternalMetric.ATTRIBUTES.put(EntityVariant.Vanilla, new HashMap<>() {{
             put(EntityAttribute.MAX_LEVEL,               COMMON.vanillaAttributeMaxLevel.get().floatValue());
             put(EntityAttribute.MAX_HEALTH,              COMMON.vanillaAttributeMaxHealth.get().floatValue());
