@@ -1,4 +1,4 @@
-package net.msymbios.rlovelyr.common.network.message;
+package net.msymbios.rlovelyr.common.network.messages;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

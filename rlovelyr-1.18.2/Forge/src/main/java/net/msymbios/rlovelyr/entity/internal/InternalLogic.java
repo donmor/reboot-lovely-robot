@@ -237,5 +237,4 @@ public class InternalLogic {
      */
     public static void displayInfo(TamableAnimal entity, String message, boolean overlay) { displayInfo(entity, Component.nullToEmpty(message), overlay); } // displayInfo ()
 
-
 } // Class InternalLogic

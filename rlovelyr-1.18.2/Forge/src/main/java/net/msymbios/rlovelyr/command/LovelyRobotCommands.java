@@ -20,8 +20,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.common.network.NetworkHandler;
-import net.msymbios.rlovelyr.common.network.message.SetLevelCommandMessage;
-import net.msymbios.rlovelyr.common.network.message.SetColorCommandMessage;
+import net.msymbios.rlovelyr.common.network.messages.SetLevelCommandMessage;
+import net.msymbios.rlovelyr.common.network.messages.SetColorCommandMessage;
 import net.msymbios.rlovelyr.entity.internal.enums.EntityTexture;
 
 import javax.annotation.Nonnull;

@@ -1,18 +1,23 @@
 package net.msymbios.rlovelyr.common.network;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.msymbios.rlovelyr.common.network.message.SetLevelCommandMessage;
-import net.msymbios.rlovelyr.common.network.message.SetColorCommandMessage;
+import net.msymbios.rlovelyr.LovelyRobot;
+import net.msymbios.rlovelyr.common.network.messages.BlocklingMessage;
+import net.msymbios.rlovelyr.common.network.messages.SetLevelCommandMessage;
+import net.msymbios.rlovelyr.common.network.messages.SetColorCommandMessage;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class NetworkHandler {
 
@@ -47,7 +52,34 @@ public class NetworkHandler {
         HANDLER.registerMessage(id++, SetLevelCommandMessage.class, SetLevelCommandMessage::encode, SetLevelCommandMessage::decode, SetLevelCommandMessage::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         HANDLER.registerMessage(id++, SetColorCommandMessage.class, SetColorCommandMessage::encode, SetColorCommandMessage::decode, SetColorCommandMessage::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         //HANDLER.registerMessage(id++, SetXpCommandMessage.class, SetXpCommandMessage::encode, SetXpCommandMessage::decode, SetXpCommandMessage::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+
+        //registerMessage(Attribute.IsEnabledMessage.class);
+        //registerMessage(EnumAttribute.Message.class);
+        //registerMessage(FloatAttribute.ValueMessage.class);
+        //registerMessage(ModifiableFloatAttribute.BaseValueMessage.class);
+        //registerMessage(IntAttribute.ValueMessage.class);
+        //registerMessage(ModifiableIntAttribute.BaseValueMessage.class);
     } // register ()
+
+    /**
+     * Registers a blockling message.
+     *
+     * @param messageType the type of the message.
+     */
+    public static <T extends BlocklingMessage<T>> void registerMessage(@Nonnull Class<T> messageType) {
+        Function<FriendlyByteBuf, T> decoder = (buf) -> {
+            try {
+                T message = messageType.newInstance();
+                message.decode(buf);
+                return message;
+            } catch (InstantiationException | IllegalAccessException e) {
+                LovelyRobot.LOGGER.warn(e.getLocalizedMessage());
+                return null;
+            }
+        };
+
+        HANDLER.registerMessage(id++, messageType, BlocklingMessage::encode, decoder, BlocklingMessage::handle);
+    } // registerMessage ()
 
     /**
      * Sends the given message to the server.

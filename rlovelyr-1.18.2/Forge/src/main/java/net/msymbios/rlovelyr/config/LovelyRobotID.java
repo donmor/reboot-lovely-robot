@@ -161,13 +161,13 @@ public class LovelyRobotID {
     public static final String TRANS_MSG_BLAST_PROTECTION = "msg.rlovelyr.blast_protection";
     public static final String TRANS_MSG_PROJECTILE_PROTECTION = "msg.rlovelyr.projectile_protection";
 
-    public static final String TRANS_MSG_BUNNY = "entity.rlovelyr.bunny";
-    public static final String TRANS_MSG_BUNNY2 = "entity.rlovelyr.bunny2";
-    public static final String TRANS_MSG_DRAGON = "entity.rlovelyr.dragon";
-    public static final String TRANS_MSG_HONEY = "entity.rlovelyr.honey";
-    public static final String TRANS_MSG_KITSUNE = "entity.rlovelyr.kitsune";
-    public static final String TRANS_MSG_NEKO = "entity.rlovelyr.neko";
-    public static final String TRANS_MSG_VANILLA = "entity.rlovelyr.vanilla";
+    public static final String TRANS_MSG_BUNNY = "variant.bunny";
+    public static final String TRANS_MSG_BUNNY2 = "variant.bunny2";
+    public static final String TRANS_MSG_DRAGON = "variant.dragon";
+    public static final String TRANS_MSG_HONEY = "variant.honey";
+    public static final String TRANS_MSG_KITSUNE = "variant.kitsune";
+    public static final String TRANS_MSG_NEKO = "variant.neko";
+    public static final String TRANS_MSG_VANILLA = "variant.vanilla";
 
     public static final String TRANS_MSG_RANDOM = "msg.item.random";
     public static final String TRANS_MSG_WHITE = "msg.item.white";
@@ -224,16 +224,16 @@ public class LovelyRobotID {
      * @param  variant  the entity variant for which the translatable string is to be retrieved
      * @return          the translatable message key corresponding to the entity variant
      */
-    public static String getTranslation(EntityVariant variant) {
-        String value = LovelyRobotID.TRANS_MSG_BUNNY;
+    public static TranslatableComponent getTranslation(EntityVariant variant) {
+        var value = getTranslation(LovelyRobotID.TRANS_MSG_BUNNY);
         switch (variant) {
-            case Bunny -> value = LovelyRobotID.TRANS_MSG_BUNNY;
-            case Bunny2 -> value = LovelyRobotID.TRANS_MSG_BUNNY2;
-            case Dragon -> value = LovelyRobotID.TRANS_MSG_DRAGON;
-            case Honey -> value = LovelyRobotID.TRANS_MSG_HONEY;
-            case Kitsune -> value = LovelyRobotID.TRANS_MSG_KITSUNE;
-            case Neko -> value = LovelyRobotID.TRANS_MSG_NEKO;
-            case Vanilla -> value = LovelyRobotID.TRANS_MSG_VANILLA;
+            case Bunny -> value = getTranslation(LovelyRobotID.TRANS_MSG_BUNNY);
+            case Bunny2 -> value = getTranslation(LovelyRobotID.TRANS_MSG_BUNNY2);
+            case Dragon -> value = getTranslation(LovelyRobotID.TRANS_MSG_DRAGON);
+            case Honey -> value = getTranslation(LovelyRobotID.TRANS_MSG_HONEY);
+            case Kitsune -> value = getTranslation(LovelyRobotID.TRANS_MSG_KITSUNE);
+            case Neko -> value = getTranslation(LovelyRobotID.TRANS_MSG_NEKO);
+            case Vanilla -> value = getTranslation(LovelyRobotID.TRANS_MSG_VANILLA);
         }
         return value;
     } // getTranslation ()

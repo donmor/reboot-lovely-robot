@@ -8,6 +8,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.msymbios.rlovelyr.command.LovelyRobotCommands;
 import net.msymbios.rlovelyr.common.network.NetworkHandler;
+import net.msymbios.rlovelyr.common.util.ObjectUtil;
+import net.msymbios.rlovelyr.common.util.internal.Version;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
 import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.LovelyRobotItems;
@@ -30,7 +32,7 @@ public class LovelyRobot {
     /**
      * The mod's version.
      */
-    //public static final Version VERSION = new Version(ObjectUtil.coalesce(LovelyRobot.class.getPackage().getSpecificationVersion(), "99999.0.0.0"));
+    public static final Version VERSION = new Version(ObjectUtil.coalesce(LovelyRobot.class.getPackage().getSpecificationVersion(), "99999.0.0.0"));
 
     /**
      * The mod's logger.

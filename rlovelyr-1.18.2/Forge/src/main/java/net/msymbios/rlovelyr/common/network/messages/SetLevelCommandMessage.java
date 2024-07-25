@@ -1,4 +1,4 @@
-package net.msymbios.rlovelyr.common.network.message;
+package net.msymbios.rlovelyr.common.network.messages;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

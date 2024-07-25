@@ -1,7 +1,5 @@
 package net.msymbios.rlovelyr.entity.custom;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -13,7 +11,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Rotation;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
 import net.msymbios.rlovelyr.entity.goal.AiAutoAttackGoal;
@@ -21,16 +18,12 @@ import net.msymbios.rlovelyr.entity.goal.AiBaseDefenseGoal;
 import net.msymbios.rlovelyr.entity.goal.AiFollowOwnerGoal;
 import net.msymbios.rlovelyr.entity.internal.InternalAnimation;
 import net.msymbios.rlovelyr.entity.internal.InternalEntity;
-import net.msymbios.rlovelyr.entity.internal.InternalMetric;
-import net.msymbios.rlovelyr.entity.internal.enums.EntityAttribute;
-import net.msymbios.rlovelyr.entity.internal.enums.EntityVariant;
-import org.jetbrains.annotations.NotNull;
+import net.msymbios.rlovelyr.entity.internal.InternalEntityType;
+import net.msymbios.rlovelyr.entity.internal.NativeEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.core.manager.SingletonAnimationFactory;
-
-import javax.annotation.Nullable;
 
 import static net.msymbios.rlovelyr.item.LovelyRobotItems.KITSUNE_SPAWN;
 
@@ -45,7 +38,7 @@ public class KitsuneEntity extends InternalEntity implements IAnimatable {
     public KitsuneEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
         rotate(Rotation.getRandom(this.getRandom()));
-        this.variant = EntityVariant.Kitsune;
+        this.nativeEntity = NativeEntity.KITSUNE;
     } // Constructor KitsuneEntity ()
 
     // -- Inherited Methods --
@@ -65,14 +58,6 @@ public class KitsuneEntity extends InternalEntity implements IAnimatable {
     } // setDropItem ()
 
     @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor, @NotNull DifficultyInstance instance, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
-        this.variant = EntityVariant.Kitsune;
-        this.setTexture(InternalMetric.getRandomTextureID(this.variant));
-        this.setMaxLevel(getAttribute(EntityAttribute.MAX_LEVEL));
-        return super.finalizeSpawn(levelAccessor, instance, mobSpawnType, spawnGroupData, compoundTag);
-    } // finalizeSpawn ()
-
-    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
@@ -86,7 +71,7 @@ public class KitsuneEntity extends InternalEntity implements IAnimatable {
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(4, new AiAutoAttackGoal<>(this, Mob.class, LovelyRobotConfig.COMMON.attackChance.get(), true, false, InternalMetric.AvoidAttackingEntities));
+        this.targetSelector.addGoal(4, new AiAutoAttackGoal<>(this, Mob.class, LovelyRobotConfig.COMMON.attackChance.get(), true, false, InternalEntityType.AvoidAttackingEntities));
     } // registerGoals ()
 
     // -- Custom Methods --
@@ -96,12 +81,12 @@ public class KitsuneEntity extends InternalEntity implements IAnimatable {
      */
     public static AttributeSupplier createAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, LovelyRobotConfig.COMMON.kitsuneAttributeMaxHealth.get())
-                .add(Attributes.ATTACK_DAMAGE, LovelyRobotConfig.COMMON.kitsuneAttributeAttackDamage.get())
-                .add(Attributes.ATTACK_SPEED, LovelyRobotConfig.COMMON.kitsuneAttributeAttackSpeed.get())
-                .add(Attributes.MOVEMENT_SPEED, LovelyRobotConfig.COMMON.kitsuneAttributeMovementSpeed.get())
-                .add(Attributes.ARMOR, LovelyRobotConfig.COMMON.kitsuneAttributeArmor.get())
-                .add(Attributes.ARMOR_TOUGHNESS, LovelyRobotConfig.COMMON.kitsuneAttributeArmorToughness.get())
+                .add(Attributes.MAX_HEALTH, NativeEntity.KITSUNE.getMaxHealth())
+                .add(Attributes.ATTACK_DAMAGE, NativeEntity.KITSUNE.getAttackDamage())
+                .add(Attributes.ATTACK_SPEED, NativeEntity.KITSUNE.getAttackSpeed())
+                .add(Attributes.MOVEMENT_SPEED, NativeEntity.KITSUNE.getMoveSpeed())
+                .add(Attributes.ARMOR, NativeEntity.KITSUNE.getArmour())
+                .add(Attributes.ARMOR_TOUGHNESS, NativeEntity.KITSUNE.getArmourToughness())
                 .build();
     } // createAttributes ()
 

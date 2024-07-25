@@ -56,7 +56,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunnyAttributeArmorToughness;
 
@@ -66,7 +65,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> bunny2AttributeArmorToughness;
 
@@ -76,7 +74,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> dragonAttributeArmorToughness;
 
@@ -86,7 +83,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> honeyAttributeArmorToughness;
 
@@ -96,7 +92,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> kitsuneAttributeArmorToughness;
 
@@ -106,7 +101,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> nekoAttributeArmorToughness;
 
@@ -116,7 +110,6 @@ public class Common {
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeAttackDamage;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeAttackSpeed;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeMovementSpeed;
-    @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeDefense;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeArmor;
     @Nonnull public final ForgeConfigSpec.ConfigValue<Double> vanillaAttributeArmorToughness;
 
@@ -172,9 +165,9 @@ public class Common {
                 .define("width", 0.4);
 
         height = builder
-                .comment("Entity hit-box height.", "Example: [2]")
+                .comment("Entity hit-box height.", "Example: [1.9]")
                 .worldRestart()
-                .define("height", 2.0);
+                .define("height", 1.9);
         builder.pop();
 
         builder.push("Level & Experience");
@@ -286,15 +279,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.6);
 
-        bunnyAttributeDefense = builder
-                .comment("Defence", "Example: [5.0]")
-                .worldRestart()
-                .define("defence", 5.0);
-
         bunnyAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         bunnyAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -328,15 +316,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.6);
 
-        bunny2AttributeDefense = builder
-                .comment("Defence", "Example: [5.0]")
-                .worldRestart()
-                .define("defence", 5.0);
-
         bunny2AttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         bunny2AttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -370,15 +353,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.4);
 
-        dragonAttributeDefense = builder
-                .comment("Defence", "Example: [7.0]")
-                .worldRestart()
-                .define("defence", 7.0);
-
         dragonAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         dragonAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -412,15 +390,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.4);
 
-        honeyAttributeDefense = builder
-                .comment("Defence", "Example: [7.0]")
-                .worldRestart()
-                .define("defence", 7.0);
-
         honeyAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         honeyAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -454,15 +427,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.4);
 
-        kitsuneAttributeDefense = builder
-                .comment("Defence", "Example: [7.0]")
-                .worldRestart()
-                .define("defence", 7.0);
-
         kitsuneAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         kitsuneAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -496,15 +464,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.4);
 
-        nekoAttributeDefense = builder
-                .comment("Defence", "Example: [7.0]")
-                .worldRestart()
-                .define("defence", 7.0);
-
         nekoAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         nekoAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")
@@ -538,15 +501,10 @@ public class Common {
                 .worldRestart()
                 .define("movement-speed", 0.6);
 
-        vanillaAttributeDefense = builder
-                .comment("Defence", "Example: [5.0]")
-                .worldRestart()
-                .define("defence", 5.0);
-
         vanillaAttributeArmor = builder
                 .comment("Armor", "Example: [0.0]")
                 .worldRestart()
-                .define("armor", 0.0);
+                .define("armor", 5.0);
 
         vanillaAttributeArmorToughness = builder
                 .comment("Armor Toughness", "Example: [0.0]")

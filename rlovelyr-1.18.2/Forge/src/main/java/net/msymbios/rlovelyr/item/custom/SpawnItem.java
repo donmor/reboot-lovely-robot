@@ -1,6 +1,5 @@
 package net.msymbios.rlovelyr.item.custom;
 
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -164,7 +163,6 @@ public class SpawnItem extends ForgeSpawnEggItem {
         if(dataNBT.getInt(LovelyRobotID.STAT_COLOR) != EntityTexture.RANDOM.getId()) entity.setTexture(dataNBT.getInt(LovelyRobotID.STAT_COLOR));
 
         // Set max level, current level, and experience if they are greater than 0
-        if(dataNBT.getInt(LovelyRobotID.STAT_MAX_LEVEL) > 0) entity.setMaxLevel(dataNBT.getInt(LovelyRobotID.STAT_MAX_LEVEL));
         if(dataNBT.getInt(LovelyRobotID.STAT_LEVEL) > 0) entity.setCurrentLevel(dataNBT.getInt(LovelyRobotID.STAT_LEVEL));
         if(dataNBT.getInt(LovelyRobotID.STAT_EXP) > 0) entity.setExp(dataNBT.getInt(LovelyRobotID.STAT_EXP));
 

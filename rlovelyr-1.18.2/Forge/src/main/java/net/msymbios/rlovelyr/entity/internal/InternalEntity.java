@@ -2,8 +2,10 @@ package net.msymbios.rlovelyr.entity.internal;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,21 +24,30 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.msymbios.rlovelyr.LovelyRobot;
+import net.msymbios.rlovelyr.common.util.ObjectUtil;
+import net.msymbios.rlovelyr.common.util.interfaces.IReadWriteNBT;
+import net.msymbios.rlovelyr.common.util.internal.Version;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 import net.msymbios.rlovelyr.entity.internal.enums.*;
 import net.msymbios.rlovelyr.item.utils.Utility;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.Objects;
 
 import static net.msymbios.rlovelyr.item.utils.Utility.invertBoolean;
 
-public abstract class InternalEntity extends TamableAnimal {
+public abstract class InternalEntity extends TamableAnimal implements IEntityAdditionalSpawnData, IReadWriteNBT {
 
     // -- Variables --
+
     protected static final EntityDataAccessor<Integer> TEXTURE_ID = SynchedEntityData.defineId(InternalEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(InternalEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> AUTO_ATTACK = SynchedEntityData.defineId(InternalEntity.class, EntityDataSerializers.BOOLEAN);
@@ -55,38 +67,38 @@ public abstract class InternalEntity extends TamableAnimal {
 
     protected static final EntityDataAccessor<Boolean> NOTIFICATION = SynchedEntityData.defineId(InternalEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public final ItemStack[] handItemsForAnimation = new ItemStack[]{ItemStack.EMPTY, ItemStack.EMPTY};
     protected int waryTimer = 0, autoHealTimer = 0, sitPoseChangeTimer = 0;
     protected boolean combatMode = false, autoHeal = false;
-    public EntityVariant variant;
+    public NativeEntity nativeEntity;
     protected EntityModel model = EntityModel.Default;
 
     // -- Properties --
 
-    // MISC
-    public int getSitPoseChangeTimer() { return sitPoseChangeTimer; }
-
     // TEXTURE
-    public ResourceLocation getTexture() { return InternalMetric.getTexture(this.variant, EntityTexture.byId(getTextureID())); } // getTexture ()
+
+    public ResourceLocation getTexture() { return nativeEntity.getTexture(EntityTexture.byId(getTextureID())); } // getTexture ()
 
     public int getTextureID() {
-        int value = InternalMetric.getRandomTextureID(this.variant);
+        int value = nativeEntity.getRandomTextureID();
         try {value = this.entityData.get(TEXTURE_ID);}
         catch (Exception ignored) {}
         return value;
     } // getTextureID ()
 
-    public void setTexture(int value) { if(InternalMetric.checkTextureID(this.variant, EntityTexture.byId(value))) this.entityData.set(TEXTURE_ID, value); } // setTexture ()
+    public void setTexture(int value) { if(nativeEntity.checkTexture(EntityTexture.byId(value))) this.entityData.set(TEXTURE_ID, value); } // setTexture ()
 
     public void setTexture(EntityTexture value) { setTexture(value.getId()); } // setTexture ()
 
     // MODEL
-    public ResourceLocation getCurrentModel() { return InternalMetric.getModel(this.variant, model); } // getCurrentModel ()
+
+    public ResourceLocation getCurrentModel() { return nativeEntity.getModel(model); } // getCurrentModel ()
 
     // ANIMATOR
-    public ResourceLocation getAnimator() { return InternalMetric.getAnimator(this.variant); } // getAnimator ()
+
+    public ResourceLocation getAnimator() { return nativeEntity.getAnimator(); } // getAnimator ()
 
     // STATE
+
     public int getCurrentStateID() {
         int value = EntityState.Standby.getId();
         try {value = this.entityData.get(STATE);}
@@ -110,6 +122,7 @@ public abstract class InternalEntity extends TamableAnimal {
     } // setCurrentState ()
 
     // AUTO ATTACK
+
     public boolean getAutoAttack() {
         boolean value = false;
         try {value = this.entityData.get(AUTO_ATTACK);}
@@ -122,25 +135,24 @@ public abstract class InternalEntity extends TamableAnimal {
     } // setAutoAttack ()
 
     // STATS
-    public int getAttribute(EntityAttribute attribute) { return (int) InternalMetric.getAttribute(this.variant, attribute); } // getAttribute ()
 
-    public int getMaxLevel() { return getMaxLevel (getAttribute(EntityAttribute.MAX_LEVEL)); } // getMaxLevel ()
+    public int getMaxLevel() { return nativeEntity.getMaxLevel(); } // getMaxLevel ()
 
-    public int getMaxLevel(int value){
-        var oldValue = value;
-        try {value = this.entityData.get(MAX_LEVEL);}
-        catch (Exception ignored) {}
-        if(value != oldValue) setMaxLevel(oldValue);
-        return value;
-    } // getMaxLevel ()
+    public int getHp() { return InternalLogic.calculateHp(this.getCurrentLevel(), (int)this.nativeEntity.getMaxHealth()); } // getHp ()
 
-    public void setMaxLevel(int value) {
-        this.entityData.set(MAX_LEVEL, value);
-    } // setMaxLevel ()
+    public int getAttackDamage() { return InternalLogic.calculateAttack(this.getCurrentLevel(), (int)nativeEntity.getAttackDamage()); } // getAttackDamage ()
+
+    public int getArmorLevel() {
+        var defence = InternalLogic.calculateDefense(this.getCurrentLevel(), (int)nativeEntity.getArmour());
+        return (int) InternalLogic.calculateArmor(defence);
+    } // getArmorLevel ()
+
+    public int getArmorToughnessLevel() { return (int) InternalLogic.calculateArmorToughness(getArmorLevel()); } // getArmorToughnessLevel ()
+
+    public int getLooting() {return InternalLogic.calculateLooting(this.getCurrentLevel());} // getLooting ()
 
     public int getCurrentLevel() {
-        var level = getAttribute(EntityAttribute.MAX_LEVEL);
-        if(level != getMaxLevel()) setMaxLevel(level);
+        var level = 0;
         try {level = this.entityData.get(LEVEL);}
         catch (Exception ignored){}
         return level;
@@ -148,7 +160,7 @@ public abstract class InternalEntity extends TamableAnimal {
 
     public void setCurrentLevel(int value){
         this.entityData.set(LEVEL, value);
-        InternalLogic.handleLevel(this, getHp(), getAttack(), getArmorLevel(), getArmorToughnessLevel());
+        InternalLogic.handleLevel(this, getHp(), getAttackDamage(), getArmorLevel(), getArmorToughnessLevel());
     } // setCurrentLevel ()
 
     public int getExp(){
@@ -162,25 +174,8 @@ public abstract class InternalEntity extends TamableAnimal {
         this.entityData.set(EXP, value);
     } // setExp ()
 
-    public int getHp() { return InternalLogic.calculateHp(this.getCurrentLevel(), getAttribute(EntityAttribute.MAX_HEALTH)); } // getHp ()
-
-    public int getAttack() { return InternalLogic.calculateAttack(this.getCurrentLevel(), getAttribute(EntityAttribute.ATTACK_DAMAGE)); } // getAttack ()
-
-    public int getDefense() { return InternalLogic.calculateDefense(this.getCurrentLevel(), getAttribute(EntityAttribute.DEFENSE)); } // getDefenseValue ()
-
-    public int getLooting() {
-        return InternalLogic.calculateLooting(this.getCurrentLevel());
-    } // getLooting ()
-
-    public double getArmorLevel() {
-        return InternalLogic.calculateArmor(this.getDefense());
-    } // getArmorLevel ()
-
-    public double getArmorToughnessLevel() {
-        return InternalLogic.calculateArmorToughness(this.getArmorLevel());
-    } // getArmorToughnessLevel ()
-
     // PROTECTION
+
     public int getFireProtection() {
         int value = 0;
         try {value = this.entityData.get(FIRE_PROTECTION);}
@@ -226,6 +221,7 @@ public abstract class InternalEntity extends TamableAnimal {
     } // setProjectileProtection ()
 
     // BASE
+
     public float getBaseX() {
         float value = this.getBlockX();
         try {value = this.entityData.get(BASE_X);}
@@ -259,7 +255,8 @@ public abstract class InternalEntity extends TamableAnimal {
         this.entityData.set(BASE_Z, value);
     } // setBaseZ ()
 
-    // INFO
+    // NOTIFICATION
+
     public boolean getNotification() {
         boolean value = true;
         try {value = this.entityData.get(NOTIFICATION);}
@@ -272,12 +269,13 @@ public abstract class InternalEntity extends TamableAnimal {
     } // setNotification ()
 
     // -- Constructor --
+
     protected InternalEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
     } // Constructor InternalEntity ()
 
-
     // -- Sound Methods --
+
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
         return SoundEvents.GENERIC_HURT;
     } // getHurtSound ()
@@ -289,10 +287,22 @@ public abstract class InternalEntity extends TamableAnimal {
     // -- Inherited Methods --
 
     @Override
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor, @NotNull DifficultyInstance instance, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+        this.setTexture(nativeEntity.getRandomTextureID());
+        return super.finalizeSpawn(levelAccessor, instance, mobSpawnType, spawnGroupData, compoundTag);
+    } // finalizeSpawn ()
+
+    @Override
+    public @Nonnull Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    } // getAddEntityPacket ()
+
+    @Override
     public void tick() {
         super.tick();
         handleCombatMode();
         handleAutoHeal();
+        displayExtra();
     } // tick ()
 
     @Override
@@ -357,7 +367,7 @@ public abstract class InternalEntity extends TamableAnimal {
 
         nbt.putString(LovelyRobotID.STAT_OWNER, Objects.requireNonNull(this.getOwner()).getScoreboardName());
 
-        nbt.putString(LovelyRobotID.STAT_TYPE, LovelyRobotID.getTranslation(this.variant));
+        nbt.putString(LovelyRobotID.STAT_TYPE, this.nativeEntity.key);
         nbt.putInt(LovelyRobotID.STAT_COLOR, this.getTextureID());
 
         nbt.putInt(LovelyRobotID.STAT_MAX_LEVEL, this.getMaxLevel());
@@ -443,11 +453,10 @@ public abstract class InternalEntity extends TamableAnimal {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(TEXTURE_ID, EntityTexture.PINK.getId());
+        this.entityData.define(TEXTURE_ID, EntityTexture.RANDOM.getId());
         this.entityData.define(STATE, EntityState.Follow.getId());
         this.entityData.define(AUTO_ATTACK, true);
 
-        this.entityData.define(MAX_LEVEL, 200);
         this.entityData.define(LEVEL, 0);
         this.entityData.define(EXP, 0);
 
@@ -466,11 +475,25 @@ public abstract class InternalEntity extends TamableAnimal {
     @Override
     public void addAdditionalSaveData(CompoundTag dataNBT) {
         super.addAdditionalSaveData(dataNBT);
+        CompoundTag entityData = new CompoundTag();
+        entityData.putString("VersionNBT", LovelyRobot.VERSION.toString());
+        writeToNBT(entityData);
+        dataNBT.put("EntityData", entityData);
+    } // addAdditionalSaveData ()
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag dataNBT) {
+        super.readAdditionalSaveData(dataNBT);
+        CompoundTag entityData = dataNBT.getCompound("EntityData");
+        readFromNBT(entityData, ObjectUtil.coalesce(new Version(entityData.getString("VersionNBT")), LovelyRobot.VERSION));
+    } // readAdditionalSaveData ()
+
+    @Override
+    public CompoundTag writeToNBT(@Nonnull CompoundTag dataNBT) {
         dataNBT.putInt("TextureID", this.getTextureID());
         dataNBT.putInt("State", this.getCurrentStateID());
         dataNBT.putBoolean("AutoAttack", this.getAutoAttack());
 
-        dataNBT.putInt("MaxLevel", this.getMaxLevel());
         dataNBT.putInt("Level", this.getCurrentLevel());
         dataNBT.putInt("Exp", this.getExp());
 
@@ -483,18 +506,21 @@ public abstract class InternalEntity extends TamableAnimal {
         dataNBT.putFloat("BaseY", this.getBaseY());
         dataNBT.putFloat("BaseZ", this.getBaseZ());
 
-        dataNBT.putString("Owner", Objects.requireNonNull(this.getOwner()).getScoreboardName());
-        dataNBT.putBoolean("Notification", getNotification());
-    } // addAdditionalSaveData ()
+        dataNBT.putBoolean("Notification", this.getNotification());
+
+        //dataNBT.put("Inventory", equipmentInv.writeToNBT());
+        //dataNBT.put("Attributes", attributes.writeToNBT());
+        //dataNBT.put("Tasks", tasks.writeToNBT());
+        //dataNBT.put("Skills", skills.writeToNBT());
+        return dataNBT;
+    } // writeToNBT
 
     @Override
-    public void readAdditionalSaveData(CompoundTag dataNBT) {
-        super.readAdditionalSaveData(dataNBT);
+    public void readFromNBT(@Nonnull CompoundTag dataNBT, @Nonnull Version version) {
         this.setTexture(dataNBT.getInt("TextureID"));
         this.setCurrentState(dataNBT.getInt("State"));
         this.setAutoAttack(dataNBT.getBoolean("AutoAttack"));
 
-        this.setMaxLevel(dataNBT.getInt("MaxLevel"));
         this.setCurrentLevel(dataNBT.getInt("Level"));
         this.setExp(dataNBT.getInt("Exp"));
 
@@ -507,19 +533,48 @@ public abstract class InternalEntity extends TamableAnimal {
         this.setBaseZ(dataNBT.getFloat("BaseZ"));
         this.setBaseX(dataNBT.getFloat("BaseX"));
 
-        setNotification(dataNBT.getBoolean("Notification"));
-    } // readAdditionalSaveData ()
+        this.setNotification(dataNBT.getBoolean("Notification"));
+
+
+        //equipmentInv.readFromNBT(dataNBT.getCompound("Inventory"), version);
+        //attributes.readFromNBT(dataNBT.getCompound("Attributes"), version);
+        //tasks.readFromNBT(dataNBT.getCompound("Tasks"), version);
+        //skills.readFromNBT(dataNBT.getCompound("Skills"), version);
+
+        //equipmentInv.updateToolAttributes();
+        //attributes.updateNativeBonuses(false);
+    } // readFromNBT ()
+
+    @Override
+    public void writeSpawnData(@Nonnull FriendlyByteBuf buf) {
+        buf.writeInt(NativeEntity.NATIVES.indexOf(nativeEntity));
+
+        //equipmentInv.encode(buf);
+        //attributes.encode(buf);
+        //tasks.encode(buf);
+        //skills.encode(buf);
+    } // writeSpawnData ()
+
+    @Override
+    public void readSpawnData(@Nonnull FriendlyByteBuf buf) {
+        nativeEntity = NativeEntity.NATIVES.get(buf.readInt());
+
+        //equipmentInv.decode(buf);
+        //attributes.decode(buf);
+        //tasks.decode(buf);
+        //skills.decode(buf);
+
+        //equipmentInv.updateToolAttributes();
+        //attributes.updateNativeBonuses(false);
+    } // writeSpawnData ()
 
     // -- Custom Methods --
 
     public abstract ItemStack setDropItem();
 
     private boolean canInteract(ItemStack stack){
-        if(stack.is(Items.WHITE_DYE) ||stack.is(Items.ORANGE_DYE) || stack.is(Items.MAGENTA_DYE) || stack.is(Items.LIGHT_BLUE_DYE) ||
-                stack.is(Items.YELLOW_DYE) || stack.is(Items.LIME_DYE) || stack.is(Items.PINK_DYE) || stack.is(Items.GRAY_DYE) ||
-                stack.is(Items.LIGHT_GRAY_DYE) || stack.is(Items.CYAN_DYE) || stack.is(Items.PURPLE_DYE) || stack.is(Items.BLUE_DYE) ||
-                stack.is(Items.BROWN_DYE) || stack.is(Items.GREEN_DYE) || stack.is(Items.RED_DYE) || stack.is(Items.BLACK_DYE)) return false;
-        if(stack.is(Items.WOODEN_SWORD) || stack.is(Items.STONE_SWORD) || stack.is(Items.IRON_SWORD) || stack.is(Items.GOLDEN_SWORD) || stack.is(Items.DIAMOND_SWORD) || stack.is(Items.NETHERITE_SWORD)) return false;
+        if(stack.getItem() instanceof DyeItem) return false;
+        if(stack.getItem() instanceof SwordItem) return false;
         if(stack.is(Items.STICK) || stack.is(Items.BOOK) || stack.is(Items.WRITABLE_BOOK) || stack.is(Items.OAK_BUTTON)) return false;
         return !stack.is(Items.COMPASS);
     } // canInteract ()
@@ -529,7 +584,7 @@ public abstract class InternalEntity extends TamableAnimal {
     } // canInteractGuardMode ()
 
     private boolean canInteractAutoAttack(ItemStack stack) {
-        return stack.is(Items.WOODEN_SWORD) || stack.is(Items.STONE_SWORD) || stack.is(Items.IRON_SWORD) || stack.is(Items.GOLDEN_SWORD) || stack.is(Items.DIAMOND_SWORD) || stack.is(Items.NETHERITE_SWORD);
+        return stack.getItem() instanceof SwordItem;
     } // canInteractAutoAttack ()
 
     public void handleInteract (Player player) {}
@@ -545,15 +600,15 @@ public abstract class InternalEntity extends TamableAnimal {
         if(!customName.isEmpty()) addExp = addExp * 3 / 2;
         exp += addExp;
 
-        var oldLevel = getCurrentLevel();
-        while (exp >= InternalLogic.calculateNextExp(getCurrentLevel())) {
-            exp -= InternalLogic.calculateNextExp(getCurrentLevel());
-            setCurrentLevel(getCurrentLevel() + 1);
+        var oldLevel = this.getCurrentLevel();
+        while (exp >= InternalLogic.calculateNextExp(this.getCurrentLevel())) {
+            exp -= InternalLogic.calculateNextExp(this.getCurrentLevel());
+            setCurrentLevel(this.getCurrentLevel() + 1);
             InternalParticle.LevelUp(this);
         }
 
         setExp(exp);
-        if(oldLevel != getCurrentLevel()) {
+        if(oldLevel != this.getCurrentLevel()) {
             if(!getLevel().isClientSide) {
                 try {
                     final LivingEntity owner = getOwner();
@@ -565,13 +620,13 @@ public abstract class InternalEntity extends TamableAnimal {
     } // addExp ()
 
     protected void handleAutoHeal () {
-        if(this.getHealth() < this.getHp()) autoHeal = true;
+        if(this.getHealth() < this.getMaxHealth()) autoHeal = true;
         if(this.getLevel().isClientSide && !autoHeal) return;
 
         if(autoHealTimer != 0) {
             autoHealTimer--;
         } else {
-            final float healValue = this.getHp() / 16.0F;
+            final float healValue = this.getHealth() / 16.0F;
             this.heal(healValue);
             autoHeal = false;
             autoHealTimer = LovelyRobotConfig.COMMON.healInterval.get();
@@ -720,17 +775,18 @@ public abstract class InternalEntity extends TamableAnimal {
         else InternalLogic.displayInfo(this, new TranslatableComponent(message), true);
     } // displayNotification ()
 
+
     public void displayExtra() {
         Component debug = null;
         if(combatMode && getNotification()) {
-            debug = new TranslatableComponent(LovelyRobotID.getTranslation(this.variant)).append(Component.nullToEmpty(": ").copy().append(new TranslatableComponent("msg.rlovelyr.wary")));
+            debug = LovelyRobotID.getTranslation(Objects.requireNonNull(EntityVariant.byName(nativeEntity.key))).append(Component.nullToEmpty(": ").copy().append(new TranslatableComponent("msg.rlovelyr.wary")));
             if(waryTimer < 10) debug = debug.copy().append(": 0" + waryTimer + " ");
             else debug = debug.copy().append(": " + waryTimer + " ");
         }
 
         if(autoHeal && getNotification()) {
             if(debug != null) debug = debug.copy().append(new TranslatableComponent("msg.rlovelyr.heal"));
-            else debug = new TranslatableComponent(LovelyRobotID.getTranslation(this.variant)).append(Component.nullToEmpty(": ").copy().append(new TranslatableComponent("msg.rlovelyr.heal")));
+            else debug = LovelyRobotID.getTranslation(Objects.requireNonNull(EntityVariant.byName(nativeEntity.key))).append(Component.nullToEmpty(": ").copy().append(new TranslatableComponent("msg.rlovelyr.heal")));
 
             if(autoHealTimer < 10) debug = debug.copy().append(": 0" + autoHealTimer + " ");
             else debug = debug.copy().append(": " + autoHealTimer + " ");
@@ -744,13 +800,13 @@ public abstract class InternalEntity extends TamableAnimal {
         if(!canShow) return;
         InternalLogic.displayInfo(this, (new TranslatableComponent(LovelyRobotID.TRANS_MSG_BAR)), false);
         if(showLevelUp) InternalLogic.displayInfo(this, (new TranslatableComponent(LovelyRobotID.TRANS_MSG_LEVEL_UP)), false);
-        if(this.getCustomName() != null) InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.getTranslation(this.variant)).append(": " + this.getCustomName().getString()), false);
-        else InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.getTranslation(this.variant)), false);
+        if(this.getCustomName() != null) InternalLogic.displayInfo(this, LovelyRobotID.getTranslation(Objects.requireNonNull(EntityVariant.byName(nativeEntity.key))).append(": " + this.getCustomName().getString()), false);
+        else InternalLogic.displayInfo(this, LovelyRobotID.getTranslation(Objects.requireNonNull(EntityVariant.byName(nativeEntity.key))), false);
         InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_LEVEL).append(": " + this.getCurrentLevel()             + "/" + this.getMaxLevel()), false);
-        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_EXPERIENCE).append(": " + this.getExp()                 + "/" + InternalLogic.calculateNextExp(this.getCurrentLevel())), false);
+        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_EXPERIENCE).append(": " + this.getExp()                 + "/" + InternalLogic.calculateNextExp(this.getExp())), false);
         InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_HEALTH).append(": " + (int)Math.floor(this.getHealth()) + "/" + (int)this.getMaxHealth()), false);
-        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_ATTACK).append(": " + this.getAttack()), false);
-        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_DEFENCE).append(": " + this.getDefense()), false);
+        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_ATTACK).append(": " + this.getAttackDamage()), false);
+        InternalLogic.displayInfo(this, new TranslatableComponent(LovelyRobotID.TRANS_MSG_DEFENCE).append(": " + this.getArmorLevel()), false);
     } // displayGeneralMessage ()
 
     public void displayEnchantmentMessage() {
