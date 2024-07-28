@@ -3,8 +3,6 @@ package net.msymbios.rlovelyr.config.internal;
 import com.electronwill.nightconfig.core.Config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nonnull;
-
 /**
  * Config options only available to each client.
  */
@@ -12,22 +10,21 @@ public class Client {
 
     // -- Variables --
 
+    public final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+
     // -- RENDERER --
     public final ForgeConfigSpec.ConfigValue<Double> shadowRadius;
 
     // -- Constructor --
 
-    /**
-     * @param builder the builder used to create the config.
-     */
-    public Client(@Nonnull ForgeConfigSpec.Builder builder) {
+    public Client() {
         Config.setInsertionOrderPreserved(true);
 
-        builder.push("Renderer");
-        shadowRadius = builder
+        BUILDER.push("Renderer");
+        shadowRadius = BUILDER
                 .comment("Entity shadow cast size on the ground.", "Example: [0.4]")
                 .define("shadow-radius", 0.4);
-        builder.pop();
+        BUILDER.pop();
 
     } // Constructor Client ()
 
