@@ -7,30 +7,30 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
-import net.msymbios.rlovelyr.entity.enums.EntityTexture;
+import net.msymbios.rlovelyr.entity.internal.enums.EntityTexture;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static net.msymbios.rlovelyr.util.internal.Utility.*;
+import static net.msymbios.rlovelyr.item.util.TooltipUtils.*;
 
 public class RobotCoreItem extends Item {
 
-    // -- Constructor --
+    // -- Constructors --
+
     public RobotCoreItem(Settings settings) {
         super(settings);
     } // Constructor RobotCoreItem ()
 
     // -- Inherited Methods --
 
-    /**
-     * Appends tooltip information to the given ItemStack in the specified world, using the provided list of Text elements and TooltipContext.
-     **/
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
         if (stack.hasNbt()) {
             NbtCompound nbt = stack.getOrCreateNbt();
             addNameTooltip(tooltip, nbt);
+            addOwnerTooltip(tooltip, nbt);
             addTypeTooltip(tooltip, nbt);
             addColorTooltip(tooltip, nbt);
             addLevelTooltip(tooltip, nbt);

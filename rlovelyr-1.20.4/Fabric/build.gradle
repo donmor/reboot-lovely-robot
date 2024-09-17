@@ -4,36 +4,63 @@ plugins {
 }
 
 archivesBaseName = "${mod_id}-fabric-${minecraft_version}"
-version = "${mod_version}"
-group = "${mod_group}"
+version = project.mod_version
+group = project.mod_group
 
 repositories {
-	maven { url "https://minecraft.curseforge.com/api/maven/" }
 	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 fabricApi {
-	//configureDataGeneration()
+	configureDataGeneration()
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${minecraft_version}"
-	mappings "net.fabricmc:yarn:${fabric_yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.fabric_yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	compileOnly project(":Common")
 	modImplementation "software.bernie.geckolib:${fabric_geckolib}"
+}
 
-	// TypeTools dependency
-	implementation 'net.jodah:typetools:0.6.2'
+loom {
+	runs {
+		client {
+			client()
+			setConfigName("Fabric Client")
+			ideConfigGenerated(true)
+			runDir("run")
+		}
+		server {
+			server()
+			setConfigName("Fabric Server")
+			ideConfigGenerated(true)
+			runDir("run")
+		}
+	}
+
+	mixin {
+		defaultRefmapName.convention("${mod_id}.refmap.json")
+	}
+
+	accessWidenerPath = file("${project(':Common').projectDir.path}/src/main/resources/${mod_id}.accesswidener")
 }
 
 processResources {
+	from project(":Common").sourceSets.main.resources
 	inputs.property "version", project.version
-
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
+}
+
+tasks.withType(JavaCompile) {
+	source(project(":Common").sourceSets.main.allSource)
+}
+
+sourcesJar {
+	from(project(":Common").sourceSets.main.allSource)
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -1,16 +1,15 @@
 package net.msymbios.rlovelyr.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
-import net.msymbios.rlovelyr.entity.animation.AnimationRegister;
+import net.msymbios.rlovelyr.item.LovelyRobotItems;
 
 public class LovelyRobotClient implements ClientModInitializer {
 
-    // -- Method --
+    // -- Inherited Method --
+
     @Override
     public void onInitializeClient() {
-        LovelyRobotEntities.registerRender();
-        AnimationRegister.registerAnimationState();
+        LovelyRobotItems.registerModels();
     } // onInitializeClient ()
 
 } // Class LovelyRobotClient

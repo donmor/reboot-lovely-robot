@@ -12,7 +12,6 @@
 		"homepage": "https://www.curseforge.com/minecraft/mc-mods/reboot-lovelyrobot",
 		"sources": "https://github.com/heria-zone/reboot-lovely-robot"
 	},
-
 	"license": "MIT Licence",
 	"icon": "assets/rlovelyr/icon.png",
 
@@ -21,21 +20,23 @@
 		"main": [
 			"net.msymbios.rlovelyr.LovelyRobot"
 		],
-	    "client": [
-	      "net.msymbios.rlovelyr.client.LovelyRobotClient"
-	    ]
+		"client": [
+			"net.msymbios.rlovelyr.client.LovelyRobotClient"
+		],
+		"fabric-datagen": [
+			"net.msymbios.rlovelyr.data.LovelyRobotData"
+		]
 	},
 	"mixins": [
 		"rlovelyr.mixins.json"
 	],
-
+	"accessWidener" : "rlovelyr.accesswidener",
 	"depends": {
-		"fabricloader": ">=0.15.9",
+		"fabricloader": ">=0.16.5",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	
 	"suggests": {
 		"another-mod": "*"
 	}
