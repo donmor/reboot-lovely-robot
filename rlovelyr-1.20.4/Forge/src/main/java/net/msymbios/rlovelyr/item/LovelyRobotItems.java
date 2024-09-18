@@ -13,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
+import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.custom.RobotCoreItem;
 import net.msymbios.rlovelyr.item.custom.SpawnItem;
 
@@ -23,14 +24,14 @@ public class LovelyRobotItems {
     // -- Variables --
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, LovelyRobot.MODID);
-    public static final RegistryObject<Item> ROBOT_CORE = ITEMS.register(LovelyRobotID.ROBOT_CORE, () -> new RobotCoreItem(new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
-    public static final RegistryObject<Item> BUNNY_SPAWN = registerItem(LovelyRobotID.BUNNY_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> BUNNY2_SPAWN = registerItem(LovelyRobotID.BUNNY2_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> DRAGON_SPAWN = registerItem(LovelyRobotID.DRAGON_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> HONEY_SPAWN = registerItem(LovelyRobotID.HONEY_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> KITSUNE_SPAWN = registerItem(LovelyRobotID.KITSUNE_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> NEKO_SPAWN = registerItem(LovelyRobotID.NEKO_SPAWN, Rarity.RARE, 1);
-    public static final RegistryObject<Item> VANILLA_SPAWN = registerItem(LovelyRobotID.VANILLA_SPAWN, Rarity.RARE, 1);
+    public static final RegistryObject<Item> ROBOT_CORE = registerItem(LovelyRobotID.ROBOT_CORE, Rarity.UNCOMMON, 1);
+    public static final RegistryObject<Item> BUNNY_SPAWN = registerItem(LovelyRobotID.BUNNY_SPAWN, LovelyRobotEntities.BUNNY, Rarity.RARE, 1);
+    public static final RegistryObject<Item> BUNNY2_SPAWN = registerItem(LovelyRobotID.BUNNY2_SPAWN, LovelyRobotEntities.BUNNY2, Rarity.RARE, 1);
+    public static final RegistryObject<Item> DRAGON_SPAWN = registerItem(LovelyRobotID.DRAGON_SPAWN, LovelyRobotEntities.DRAGON, Rarity.RARE, 1);
+    public static final RegistryObject<Item> HONEY_SPAWN = registerItem(LovelyRobotID.HONEY_SPAWN, LovelyRobotEntities.HONEY, Rarity.RARE, 1);
+    public static final RegistryObject<Item> KITSUNE_SPAWN = registerItem(LovelyRobotID.KITSUNE_SPAWN, LovelyRobotEntities.KITSUNE, Rarity.RARE, 1);
+    public static final RegistryObject<Item> NEKO_SPAWN = registerItem(LovelyRobotID.NEKO_SPAWN, LovelyRobotEntities.NEKO, Rarity.RARE, 1);
+    public static final RegistryObject<Item> VANILLA_SPAWN = registerItem(LovelyRobotID.VANILLA_SPAWN, LovelyRobotEntities.VANILLA, Rarity.RARE, 1);
 
     // -- Methods --
 

@@ -2,16 +2,33 @@ package net.msymbios.rlovelyr.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.msymbios.rlovelyr.LovelyRobot;
+import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 
 public class LovelyRobotEvents {
 
     // -- Methods --
 
+    @Mod.EventBusSubscriber(modid = LovelyRobot.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModEventBusEvents {
+
+        // -- Methods --
+
+        /**
+         * Adds the additional attributes an entity needs to function.
+         */
+        @SubscribeEvent
+        public static void onRegisterEntityAttribute(EntityAttributeCreationEvent event) {
+            LovelyRobotEntities.registerAttribute(event);
+        } // onRegisterEntityAttribute ()
+
+    } // Class ModEventBusEvents
+    
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {

@@ -11,6 +11,7 @@ import net.msymbios.rlovelyr.block.LovelyRobotBlocks;
 import net.msymbios.rlovelyr.common.util.ObjectUtil;
 import net.msymbios.rlovelyr.common.util.internal.Version;
 import net.msymbios.rlovelyr.config.LovelyRobotConfig;
+import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.LovelyRobotItems;
 import net.msymbios.rlovelyr.item.LovelyRobotItemsGroup;
 import org.slf4j.Logger;
@@ -39,11 +40,14 @@ public class LovelyRobot {
 
     public LovelyRobot(FMLJavaModLoadingContext context) {
         IEventBus event = context.getModEventBus();
+        LovelyRobotConfig.register(context);
 
         event.addListener(this::commonSetup);
         event.addListener(this::clientSetup);
 
+        LovelyRobotEntities.register(event);
         LovelyRobotBlocks.register(event);
+
         LovelyRobotItems.register(event);
         LovelyRobotItemsGroup.register(event);
 
@@ -51,7 +55,6 @@ public class LovelyRobot {
         MinecraftForge.EVENT_BUS.register(this);
 
         LovelyRobotItems.registerCreative(event);
-        LovelyRobotConfig.register(context);
     } // Constructor LovelyRobot ()
 
     // -- Methods --
@@ -61,6 +64,7 @@ public class LovelyRobot {
     } // commonSetup ()
 
     private void clientSetup(final FMLClientSetupEvent event) {
+        LovelyRobotEntities.registerRender();
         LovelyRobotItems.registerModel(event);
     } // clientSetup ()
 

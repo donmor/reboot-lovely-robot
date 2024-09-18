@@ -53,26 +53,6 @@ public class LovelyRobotID {
     public static final String STAT_BLAST_PROTECTION = "blast_protection";
     public static final String STAT_PROJECTILE_PROTECTION = "projectile_protection";
 
-    // -- Textures --
-
-    public static final String TEX_WHITE = "white";
-    public static final String TEX_ORANGE = "orange";
-    public static final String TEX_MAGENTA = "magenta";
-    public static final String TEX_LIGHT_BLUE = "light_blue";
-    public static final String TEX_YELLOW = "yellow";
-    public static final String TEX_LIME = "lime";
-    public static final String TEX_PINK = "pink";
-    public static final String TEX_GRAY = "gray";
-    public static final String TEX_LIGHT_GRAY = "light_gray";
-    public static final String TEX_CYAN = "cyan";
-    public static final String TEX_PURPLE = "purple";
-    public static final String TEX_BLUE = "blue";
-    public static final String TEX_BROWN = "brown";
-    public static final String TEX_GREEN = "green";
-    public static final String TEX_RED = "red";
-    public static final String TEX_BLACK = "black";
-    public static final String TEX_RANDOM = "random";
-
     // -- Messages --
 
     public static final String MSG_HEAL = "heal";
@@ -106,6 +86,38 @@ public class LovelyRobotID {
     public static final String MSG_TYPE = "type";
     public static final String MSG_COLOR = "color";
     public static final String MSG_LEVEL = "level";
+
+    // -- Path --
+    public static final String TEXTURE_ENTITY_PATH = "textures/entity/";
+
+    // -- Animators --
+
+    public static final String ANIM_DEFAULT = "default";
+
+    // -- Models --
+
+    public static final String MOD_DEFAULT = "default";
+    public static final String MOD_ARMED = "armed";
+
+    // -- Textures --
+
+    public static final String TEX_WHITE = "white";
+    public static final String TEX_ORANGE = "orange";
+    public static final String TEX_MAGENTA = "magenta";
+    public static final String TEX_LIGHT_BLUE = "light_blue";
+    public static final String TEX_YELLOW = "yellow";
+    public static final String TEX_LIME = "lime";
+    public static final String TEX_PINK = "pink";
+    public static final String TEX_GRAY = "gray";
+    public static final String TEX_LIGHT_GRAY = "light_gray";
+    public static final String TEX_CYAN = "cyan";
+    public static final String TEX_PURPLE = "purple";
+    public static final String TEX_BLUE = "blue";
+    public static final String TEX_BROWN = "brown";
+    public static final String TEX_GREEN = "green";
+    public static final String TEX_RED = "red";
+    public static final String TEX_BLACK = "black";
+    public static final String TEX_RANDOM = "random";
 
     // -- Methods --
 
