@@ -1,4 +1,4 @@
-package net.msymbios.rlovelyr.entity.enums;
+package net.msymbios.rlovelyr.entity.internal.enums;
 
 import net.msymbios.rlovelyr.config.LovelyRobotID;
 

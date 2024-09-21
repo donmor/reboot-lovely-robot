@@ -1,31 +1,32 @@
-package net.msymbios.rlovelyr.entity.enums;
-
-import net.msymbios.rlovelyr.config.LovelyRobotID;
+package net.msymbios.rlovelyr.entity.internal.enums;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public enum EntityModel {
+public enum EntityAnimation {
 
     // -- Enum --
-    Default(0, LovelyRobotID.MOD_DEFAULT),
-    Armed(1, LovelyRobotID.MOD_ARMED);
+    Idle(0, "idle"),
+    Walk(1, "walk"),
+    Rest(1, "rest"),
+    Sit(1, "sit"),
+    Attack(1, "attack");
 
     // -- Variables --
-    private static final EntityModel[] CODEC = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityModel::getId)).toArray(EntityModel[]::new);
+    private static final EntityAnimation[] CODEC = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityAnimation::getId)).toArray(EntityAnimation[]::new);
 
     private final int m_id;
 
     private final String m_name;
 
     // -- Constructor --
-    EntityModel(int id, String name) {
+    EntityAnimation(int id, String name) {
         this.m_id = id;
         this.m_name = name;
-    } // Constructor RobotModel
+    } // Constructor EntityAnimation
 
     // -- Methods --
-    public static EntityModel byId(int id) {
+    public static EntityAnimation byId(int id) {
         if (id < 0 || id >= CODEC.length) id = 0;
         return CODEC[id];
     } // byId ()
@@ -34,8 +35,8 @@ public enum EntityModel {
         return this.m_id;
     } // getId ()
 
-    public static EntityModel byName(String name) {
-        for (EntityModel item : CODEC) {
+    public static EntityAnimation byName(String name) {
+        for (EntityAnimation item : CODEC) {
             if (item.getName().equals(name))
                 return item;
         }
@@ -46,4 +47,4 @@ public enum EntityModel {
         return this.m_name;
     } // getName ()
 
-} // Enum EntityModel
+} // Enum EntityAnimation

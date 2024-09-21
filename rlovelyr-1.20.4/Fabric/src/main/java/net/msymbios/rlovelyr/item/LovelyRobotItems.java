@@ -3,38 +3,44 @@ package net.msymbios.rlovelyr.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
-import net.minecraft.world.World;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.common.item.InternalItems;
 import net.msymbios.rlovelyr.config.LovelyRobotID;
+import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 import net.msymbios.rlovelyr.item.custom.RobotCoreItem;
+import net.msymbios.rlovelyr.item.custom.SpawnItem;
 
 public class LovelyRobotItems extends InternalItems {
 
     // -- Variables --
 
     // MISCELLANEOUS
-    public static final Item ROBOT_CORE = register(LovelyRobotID.getId(LovelyRobotID.ROBOT_CORE), new RobotCoreItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).fireproof()));
+    public static final Item ROBOT_CORE = registerItem(LovelyRobotID.ROBOT_CORE, Rarity.UNCOMMON, 1);
 
     // SPAWNS
-    public static final Item BUNNY_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.BUNNY_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item BUNNY2_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.BUNNY2_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item DRAGON_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.DRAGON_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item HONEY_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.HONEY_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item KITSUNE_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.KITSUNE_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item NEKO_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.NEKO_SPAWN), new RobotCoreItem(new FabricItemSettings()));
-    public static final Item VANILLA_SPAWN = register(LovelyRobotID.getId(LovelyRobotID.VANILLA_SPAWN), new RobotCoreItem(new FabricItemSettings()));
+    public static final Item BUNNY_SPAWN = registerItem(LovelyRobotID.BUNNY_SPAWN, LovelyRobotEntities.BUNNY, Rarity.RARE, 1);
+    public static final Item BUNNY2_SPAWN = registerItem(LovelyRobotID.BUNNY2_SPAWN, LovelyRobotEntities.BUNNY2, Rarity.RARE, 1);
+    public static final Item DRAGON_SPAWN = registerItem(LovelyRobotID.DRAGON_SPAWN, LovelyRobotEntities.DRAGON, Rarity.RARE, 1);
+    public static final Item HONEY_SPAWN = registerItem(LovelyRobotID.HONEY_SPAWN, LovelyRobotEntities.HONEY, Rarity.RARE, 1);
+    public static final Item KITSUNE_SPAWN = registerItem(LovelyRobotID.KITSUNE_SPAWN, LovelyRobotEntities.KITSUNE, Rarity.RARE, 1);
+    public static final Item NEKO_SPAWN = registerItem(LovelyRobotID.NEKO_SPAWN, LovelyRobotEntities.NEKO, Rarity.RARE, 1);
+    public static final Item VANILLA_SPAWN = registerItem(LovelyRobotID.VANILLA_SPAWN, LovelyRobotEntities.VANILLA, Rarity.RARE, 1);
 
     // -- Methods --
+
+    public static Item registerItem (String name, Rarity rarity, int stack) {
+        return register(LovelyRobotID.getId(name), new RobotCoreItem(new FabricItemSettings().rarity(rarity).fireproof().maxCount(stack)));
+    } // registerItem ()
+
+    public static Item registerItem (String name, EntityType<? extends MobEntity> mob, Rarity rarity, int stack) {
+        return register(LovelyRobotID.getId(name), new SpawnItem(mob, new FabricItemSettings().rarity(rarity).fireproof().maxCount(stack)));
+    } // registerItem ()
 
     public static void register() {
         LovelyRobot.LOGGER.info("Registering Items: " + LovelyRobot.MODID );
@@ -77,17 +83,5 @@ public class LovelyRobotItems extends InternalItems {
         registerModel(LovelyRobotItems.NEKO_SPAWN, LovelyRobotID.getId(LovelyRobotID.ITEM_TAG_VARIANT), LovelyRobotID.STAT_COLOR);
         registerModel(LovelyRobotItems.VANILLA_SPAWN, LovelyRobotID.getId(LovelyRobotID.ITEM_TAG_VARIANT), LovelyRobotID.STAT_COLOR);
     } // registerModels ()
-
-    private static void registerModel(Item item, String tag, String key) {
-        // Use ModelPredicateProviderRegistry to register custom model predicate
-        // Check if item stack has the tag and return the value for the model predicate
-        ModelPredicateProviderRegistry.register(item, LovelyRobotID.getId(tag), (stack, world, entity, seed) -> stack.getNbt() != null && stack.getNbt().contains(key) ? stack.getNbt().getInt(key) : 16);
-    } // registerModel ()
-
-    private static void registerModel(Item item, Identifier tag, String key) {
-        // Use ModelPredicateProviderRegistry to register custom model predicate
-        // Check if item stack has the tag and return the value for the model predicate
-        ModelPredicateProviderRegistry.register(item, tag, (stack, world, entity, seed) -> stack.getNbt() != null && stack.getNbt().contains(key) ? stack.getNbt().getInt(key) : 16);
-    } // registerModel ()
 
 } // Class LovelyRobotItems
