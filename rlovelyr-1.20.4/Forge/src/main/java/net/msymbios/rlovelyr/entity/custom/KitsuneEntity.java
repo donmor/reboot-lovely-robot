@@ -16,7 +16,7 @@ public class KitsuneEntity extends RobotEntity  {
     
     // -- Constructor --
 
-    public KitsuneEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public KitsuneEntity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.KITSUNE;
     } // Constructor KitsuneEntity ()

@@ -89,7 +89,7 @@ public class SpawnItem extends ForgeSpawnEggItem {
                     player.awardStat(Stats.ITEM_USED.get(this));
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, entity.position());
                     entity.handleTame(player);
-                    initialize(itemstack.getTag(), entity);
+                    initialize(itemstack.getOrCreateTag(), entity);
                     return InteractionResultHolder.consume(itemstack);
                 }
             } else {
@@ -133,7 +133,7 @@ public class SpawnItem extends ForgeSpawnEggItem {
                     level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, blockpos);
 
                     entity.handleTame(context.getPlayer());
-                    initialize(itemstack.getTag(), entity);
+                    initialize(itemstack.getOrCreateTag(), entity);
                 }
 
                 return InteractionResult.CONSUME;

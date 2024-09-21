@@ -16,7 +16,7 @@ public class DragonEntity extends RobotEntity  {
     
     // -- Constructor --
 
-    public DragonEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public DragonEntity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.DRAGON;
     } // Constructor DragonEntity ()

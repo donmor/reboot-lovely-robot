@@ -16,7 +16,7 @@ public class NekoEntity extends RobotEntity  {
     
     // -- Constructor --
 
-    public NekoEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public NekoEntity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.NEKO;
     } // Constructor NekoEntity ()

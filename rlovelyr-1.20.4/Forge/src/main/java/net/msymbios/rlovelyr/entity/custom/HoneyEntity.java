@@ -16,7 +16,7 @@ public class HoneyEntity extends RobotEntity  {
     
     // -- Constructor --
 
-    public HoneyEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public HoneyEntity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.HONEY;
     } // Constructor HoneyEntity ()

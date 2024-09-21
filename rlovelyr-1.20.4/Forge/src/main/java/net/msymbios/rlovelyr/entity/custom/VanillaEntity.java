@@ -16,7 +16,7 @@ public class VanillaEntity extends RobotEntity  {
     
     // -- Constructor --
 
-    public VanillaEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public VanillaEntity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.VANILLA;
     } // Constructor VanillaEntity ()

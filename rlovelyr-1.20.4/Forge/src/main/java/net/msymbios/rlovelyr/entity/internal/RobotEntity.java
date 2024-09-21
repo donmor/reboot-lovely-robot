@@ -16,10 +16,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
@@ -207,7 +204,7 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
 
     // -- Constructor --
 
-    public RobotEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public RobotEntity(EntityType<? extends InternalEntity> entityType, Level level) {
         super(entityType, level);
         rotate(Rotation.getRandom(this.getRandom()));
     } // Constructor RobotEntity ()
@@ -339,7 +336,7 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
     protected boolean handleDamage (@NotNull DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) return false;
         if ((source.getEntity() instanceof Player player)) {
-            if (Objects.requireNonNull(this.getOwner()).getUUID() == player.getUUID() && !LovelyRobotConfig.Common.FriendlyFire)
+            if (this.isOwnedBy(player) && !LovelyRobotConfig.Common.FriendlyFire)
                 return false;
         }
         handleActivateCombatMode();
@@ -418,7 +415,7 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
         if(stack.getItem() instanceof DyeItem) return false;
         if(stack.getItem() instanceof SwordItem) return false;
         if(stack.is(Items.STICK) || stack.is(Items.BOOK) || stack.is(Items.WRITABLE_BOOK) || stack.is(Items.OAK_BUTTON)) return false;
-        return !stack.is(Items.COMPASS);
+        return !(stack.getItem() instanceof CompassItem) && !stack.is(Items.RECOVERY_COMPASS);
     } // canInteractWithItems ()
 
     @Override

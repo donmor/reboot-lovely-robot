@@ -15,7 +15,7 @@ public class Bunny2Entity extends RobotEntity  {
 
     // -- Constructor --
 
-    public Bunny2Entity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public Bunny2Entity(EntityType<? extends RobotEntity> entityType, Level level) {
         super(entityType, level);
         this.nativeEntity = NativeEntityType.BUNNY2;
     } // Constructor Bunny2Entity ()

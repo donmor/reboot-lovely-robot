@@ -119,23 +119,40 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
         super(entityType, world);
     } // Constructor InternalEntity ()
 
-    // -- Sound Methods --
+    // -- Inherited Methods --
 
+    // Sound
+
+    @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
         return SoundEvents.GENERIC_HURT;
     } // getHurtSound ()
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
     } // getDeathSound ()
 
-    // -- Inherited Methods --
+    // INITIALISE
 
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor, @NotNull DifficultyInstance instance, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
         this.setTexture(nativeEntity.getRandomTextureID());
         return super.finalizeSpawn(levelAccessor, instance, mobSpawnType, spawnGroupData, compoundTag);
     } // finalizeSpawn ()
+
+    @Override
+    protected void dropEquipment() {
+        handleItemDrop();
+        super.dropEquipment();
+    } // dropEquipment ()
+
+    @Nullable @Override
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
+        return null;
+    } // getBreedOffspring ()
+
+    // COMBAT
 
     @Override
     public boolean doHurtTarget(@NotNull Entity target) {
@@ -153,17 +170,7 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
         return !result ? false : super.hurt(source, amount);
     } // hurt ()
 
-    @Override
-    protected void dropEquipment() {
-        handleItemDrop();
-        super.dropEquipment();
-    } // dropEquipment ()
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
-        return null;
-    } // getBreedOffspring ()
+    // INTERACTION
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -247,7 +254,7 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
     protected void handleInteract (ItemStack stack, Player player) {
         handleSit(stack);
         handleState(stack);
-    } // handleInteract
+    } // handleInteract ()
 
     protected InteractionResult handleItemInteraction (ItemStack stack, Player player) {
         return InteractionResult.PASS;
@@ -323,7 +330,7 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
         return true;
     } // handleFollowState ()
 
-    // -- Display --
+    // DISPLAY
 
     protected void displayNotification(String notification, String message, boolean display) {
         if(!display) return;
