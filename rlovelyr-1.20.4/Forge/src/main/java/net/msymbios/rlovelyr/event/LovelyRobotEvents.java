@@ -10,24 +10,18 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.msymbios.rlovelyr.LovelyRobot;
 import net.msymbios.rlovelyr.entity.LovelyRobotEntities;
 
+@Mod.EventBusSubscriber(modid = LovelyRobot.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class LovelyRobotEvents {
 
     // -- Methods --
 
-    @Mod.EventBusSubscriber(modid = LovelyRobot.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ModEventBusEvents {
-
-        // -- Methods --
-
-        /**
-         * Adds the additional attributes an entity needs to function.
-         */
-        @SubscribeEvent
-        public static void onRegisterEntityAttribute(EntityAttributeCreationEvent event) {
-            LovelyRobotEntities.registerAttribute(event);
-        } // onRegisterEntityAttribute ()
-
-    } // Class ModEventBusEvents
+    /**
+     * Adds the additional attributes an entity needs to function.
+     */
+    @SubscribeEvent
+    public static void onRegisterEntityAttribute(EntityAttributeCreationEvent event) {
+        LovelyRobotEntities.registerAttribute(event);
+    } // onRegisterEntityAttribute ()
     
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

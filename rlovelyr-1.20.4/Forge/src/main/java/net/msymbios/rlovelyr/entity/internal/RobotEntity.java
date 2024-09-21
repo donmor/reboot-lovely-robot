@@ -338,6 +338,10 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
     @Override
     protected boolean handleDamage (@NotNull DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) return false;
+        if ((source.getEntity() instanceof Player player)) {
+            if (Objects.requireNonNull(this.getOwner()).getUUID() == player.getUUID() && !LovelyRobotConfig.Common.FriendlyFire)
+                return false;
+        }
         handleActivateCombatMode();
 
         if ((source.is(DamageTypes.ON_FIRE) || source.is(DamageTypes.IN_FIRE) || source.is(DamageTypes.LAVA)) && amount >= 1.0f && this.getFireProtection() > 0)
@@ -426,8 +430,9 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
 
     @Override
     protected void handleState(ItemStack stack) {
-        super.handleStandbyState(stack);
-        handleBaseDefenseState(stack);
+        if (handleStandbyState(stack)) return;
+        if (handleFollowState(stack)) return;
+        if (handleBaseDefenseState(stack)) return;
     } // handleState
 
     @Override
@@ -514,25 +519,24 @@ public abstract class RobotEntity extends InternalEntity implements GeoEntity {
 
     protected void handleAutoAttack(ItemStack stack){
         if (!canInteractAutoAttack(stack)) return;
+        if (getCurrentState() == EntityState.Defense) return;
         setAutoAttack(invertBoolean(getAutoAttack()));
 
         if(getAutoAttack()) displayNotification(LovelyRobotID.MSG_AUTO_ATTACK, LovelyRobotID.MSG_ON, getNotification());
         else displayNotification(LovelyRobotID.MSG_AUTO_ATTACK, LovelyRobotID.MSG_OFF, getNotification());
     } // handleAutoAttack ()
 
-    protected void handleBaseDefenseState(ItemStack stack){
-        if(!canInteractGuardMode(stack)) return;
+    protected boolean handleBaseDefenseState(ItemStack stack){
+        if(!canInteractGuardMode(stack) || getCurrentState() == EntityState.Defense) return false;
+        setCurrentState(EntityState.Defense);
         setOrderedToSit(false);
         setAutoAttack(true);
-
         this.setBaseX((float)this.getBlockX());
         this.setBaseY((float)this.getBlockY());
         this.setBaseZ((float)this.getBlockZ());
-        setCurrentState(EntityState.Defense);
-
         displayNotification(LovelyRobotID.MSG_BASE_DEFENCE, getNotification());
+        return true;
     } // handleBaseDefenseState ()
-
 
     public void displayGeneralMessage(boolean canShow, boolean showLevelUp) {
         if(!canShow) return;

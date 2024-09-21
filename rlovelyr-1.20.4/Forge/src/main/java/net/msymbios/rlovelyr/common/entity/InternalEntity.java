@@ -176,7 +176,7 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
             if (this.isTame() && this.isOwnedBy(player)) {
                 if (!(item instanceof DyeItem)) {
                     InteractionResult interactionresult = super.mobInteract(player, hand);
-                    if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
+                    if ((!interactionresult.consumesAction()) && this.isOwnedBy(player)) {
                         handleInteract(stack, player);
                         return InteractionResult.SUCCESS;
                     }
@@ -305,24 +305,22 @@ public abstract class InternalEntity extends TamableAnimal implements IReadWrite
     } // handleSit ()
 
     protected void handleState(ItemStack stack) {
-        handleStandbyState(stack);
-        handleFollowState(stack);
+        if (handleFollowState(stack)) return;
+        if (handleStandbyState(stack)) return;
     } // handleState
 
-    protected void handleStandbyState(ItemStack stack){
-        if(!canInteractWithItems(stack)) return;
-        if(!isOrderedToSit()) return;
-
+    protected boolean handleStandbyState(ItemStack stack){
+        if(!canInteractWithItems(stack) || getCurrentState() == EntityState.Standby) return false;
         setCurrentState(EntityState.Standby);
         displayNotification(LovelyRobotID.MSG_STANDBY, getNotification());
+        return true;
     } // handleStandbyState ()
 
-    protected void handleFollowState(ItemStack stack){
-        if(!canInteractWithItems(stack)) return;
-        if(isOrderedToSit()) return;
-
+    protected boolean handleFollowState(ItemStack stack){
+        if(!canInteractWithItems(stack) || getCurrentState() == EntityState.Follow) return false;
         setCurrentState(EntityState.Follow);
         displayNotification(LovelyRobotID.MSG_FOLLOW, getNotification());
+        return true;
     } // handleFollowState ()
 
     // -- Display --

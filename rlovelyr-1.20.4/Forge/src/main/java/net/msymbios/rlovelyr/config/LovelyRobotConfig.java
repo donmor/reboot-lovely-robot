@@ -131,6 +131,7 @@ public class LovelyRobotConfig {
         private static final ForgeConfigSpec.ConfigValue<Integer> EXPERIENCE_MULTIPLIER;
 
         // -- COMBAT --
+        public static boolean FriendlyFire = false;
         public static int AttackChance = 5;
         public static int HealInterval = 50;
         public static int WaryTime = 50;
@@ -141,11 +142,12 @@ public class LovelyRobotConfig {
         public static float BaseDefenceRange = 10;
         public static float BaseDefenceWarpRange = 15;
 
+        private static final ForgeConfigSpec.ConfigValue<Boolean> FRIENDLY_FIRE;
         private static final ForgeConfigSpec.ConfigValue<Integer> ATTACK_CHANCE;
         private static final ForgeConfigSpec.ConfigValue<Integer> HEAL_INTERVAL;
         private static final ForgeConfigSpec.ConfigValue<Integer> WARY_TIME;
-        private static final ForgeConfigSpec.BooleanValue GLOBAL_AUTO_HEAL;
-        private static final ForgeConfigSpec.BooleanValue LOOT_ENCHANTMENT;
+        private static final ForgeConfigSpec.ConfigValue<Boolean> GLOBAL_AUTO_HEAL;
+        private static final ForgeConfigSpec.ConfigValue<Boolean> LOOT_ENCHANTMENT;
         private static final ForgeConfigSpec.ConfigValue<Integer> LOOT_ENCHANTMENT_LEVEL;
         private static final ForgeConfigSpec.ConfigValue<Integer> MAX_LOOT_ENCHANTMENT;
         private static final ForgeConfigSpec.ConfigValue<Float> BASE_DEFENCE_RANGE;
@@ -337,6 +339,10 @@ public class LovelyRobotConfig {
             BUILDER.pop();
 
             BUILDER.push("Combat");
+            FRIENDLY_FIRE = BUILDER
+                    .comment("Enable/Disable Robots owners attack on their own robots.", "Example: [false]")
+                    .define("friendly-fire", false);
+
             ATTACK_CHANCE = BUILDER
                     .comment("Probability of attacking when attacked.", "Example: [5]")
                     .define("attack-chance", 5);
@@ -630,6 +636,7 @@ public class LovelyRobotConfig {
             ExperienceMultiplier = EXPERIENCE_MULTIPLIER.get();
 
             // -- COMBAT --
+            FriendlyFire = FRIENDLY_FIRE.get();
             AttackChance = ATTACK_CHANCE.get();
             HealInterval = HEAL_INTERVAL.get();
             WaryTime = WARY_TIME.get();
